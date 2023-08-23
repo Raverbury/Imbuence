@@ -14,6 +14,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber
 public class MultiplateEnchantment extends UniqueChestplateEnchantment {
@@ -78,5 +79,10 @@ public class MultiplateEnchantment extends UniqueChestplateEnchantment {
     @Override
     public int getMaxCost(int level) {
         return getMinCost(level) + 17;
+    }
+
+    @Override
+    public boolean canEnchant(@NotNull ItemStack itemStack) {
+        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getSlot() == EquipmentSlot.CHEST);
     }
 }

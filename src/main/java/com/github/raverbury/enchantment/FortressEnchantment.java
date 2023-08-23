@@ -5,12 +5,15 @@ import com.github.raverbury.ModRegistries;
 import com.github.raverbury.enchantment.base.UniqueChestplateEnchantment;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber
 public class FortressEnchantment extends UniqueChestplateEnchantment {
@@ -66,5 +69,10 @@ public class FortressEnchantment extends UniqueChestplateEnchantment {
     @Override
     public int getMaxCost(int level) {
         return getMinCost(level) + 16;
+    }
+
+    @Override
+    public boolean canEnchant(@NotNull ItemStack itemStack) {
+        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getSlot() == EquipmentSlot.CHEST);
     }
 }

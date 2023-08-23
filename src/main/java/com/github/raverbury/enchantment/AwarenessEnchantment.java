@@ -7,12 +7,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber
 public class AwarenessEnchantment extends UniqueChestplateEnchantment {
@@ -70,5 +72,10 @@ public class AwarenessEnchantment extends UniqueChestplateEnchantment {
     @Override
     public int getMaxCost(int level) {
         return getMinCost(level) + 22;
+    }
+
+    @Override
+    public boolean canEnchant(@NotNull ItemStack itemStack) {
+        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getSlot() == EquipmentSlot.CHEST);
     }
 }

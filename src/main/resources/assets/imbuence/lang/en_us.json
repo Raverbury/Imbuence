@@ -1,6 +1,6 @@
 {
   "enchantment.imbuence.shadow_walker": "Shadow Walker",
-  "enchantment.imbuence.combat_enginner": "Combat Engineer",
+  "enchantment.imbuence.combat_engineer": "Combat Engineer",
   "enchantment.imbuence.crime": "Crime",
   "enchantment.imbuence.punishment": "Punishment",
   "enchantment.imbuence.sacred_corona": "Sacred Corona",
@@ -11,7 +11,7 @@
   "enchantment.imbuence.preparedness": "Preparedness",
 
   "enchantment.imbuence.shadow_walker.desc": "Gains buffs while in the shadow.",
-  "enchantment.imbuence.combat_enginner.desc": "While in main-hand, has a chance to repair the tool when attacked.",
+  "enchantment.imbuence.combat_engineer.desc": "While in main-hand, has a chance to repair the tool when attacked.",
   "enchantment.imbuence.crime.desc": "Blocking with a shield inflicts Judgement on the attacker.",
   "enchantment.imbuence.punishment.desc": "Increases damage against targets with Judgement.",
   "enchantment.imbuence.sacred_corona.desc": "Gains Sancta Potentia during the day. It seems to be seeking something...",
@@ -29,5 +29,5 @@
   "effect.imbuence.judgement.description": "\"You are hereby denounced, guilty!\"",
   "effect.imbuence.sancta_potentia.description": "All arrows inflict bonus flat damage on impact. Becomes immune to even-numbered damage below 5 on even-numbered tiles.",
   "effect.imbuence.mare_potentia.description": "All arrows inflict percentage bonus damage on impact. Becomes immune to odd-numbered damage below 5 on odd-numbered tiles.",
-  "effect.imbuence.forbidden_syzygy.description": "Applies the effect of both Sancta Potentia and Mare Potentia."
+  "effect.imbuence.forbidden_syzygy.description": "Applies the effect of both Sancta Potentia and Mare Potentia. Additionally applies Glowing to targets hit by your arrows."
 }

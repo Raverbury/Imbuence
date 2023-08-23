@@ -5,6 +5,7 @@ import com.github.raverbury.ModRegistries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -42,8 +43,8 @@ public class CombatEngineerEnchantment extends Enchantment {
             return;
         }
         Imbuence.LOGGER.debug(damageSource.getEntity().toString());
-        ItemStack mainHandItem = entity.getMainHandItem();
-        if (!mainHandItem.isDamageableItem() || !mainHandItem.isDamaged()) {
+        ItemStack mainHandItemStack = entity.getMainHandItem();
+        if (!(mainHandItemStack.getItem() instanceof DiggerItem) || !mainHandItemStack.isDamageableItem() || !mainHandItemStack.isDamaged()) {
             return;
         }
         int roll = entity.level.getRandom().nextIntBetweenInclusive(1, 100);
@@ -51,8 +52,8 @@ public class CombatEngineerEnchantment extends Enchantment {
         if (roll <= procChance) {
             int damageHealed = BASE_DURABILITY_RESTORED + DURABILITY_RESTORED_GROWTH * combatEngineerLevel;
             Imbuence.LOGGER.debug("healed item for " + damageHealed + " durability, rolled " + roll + ", proc chance " + procChance);
-            int newDamageValue = Math.max(0, mainHandItem.getDamageValue() - damageHealed);
-            mainHandItem.setDamageValue(newDamageValue);
+            int newDamageValue = Math.max(0, mainHandItemStack.getDamageValue() - damageHealed);
+            mainHandItemStack.setDamageValue(newDamageValue);
         }
     }
 
@@ -74,5 +75,10 @@ public class CombatEngineerEnchantment extends Enchantment {
     @Override
     public int getMaxCost(int level) {
         return 27 + level * 4;
+    }
+
+    @Override
+    public boolean canEnchant(@NotNull ItemStack itemStack) {
+        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof DiggerItem);
     }
 }

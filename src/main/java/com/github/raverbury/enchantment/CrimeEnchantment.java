@@ -4,10 +4,11 @@ import com.github.raverbury.Imbuence;
 import com.github.raverbury.ModRegistries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
@@ -72,5 +73,10 @@ public class CrimeEnchantment extends Enchantment {
     @Override
     public int getMaxCost(int level) {
         return getMinCost(level) + 12;
+    }
+
+    @Override
+    public boolean canEnchant(@NotNull ItemStack itemStack) {
+        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ShieldItem);
     }
 }
