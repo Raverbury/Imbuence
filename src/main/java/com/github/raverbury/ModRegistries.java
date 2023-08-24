@@ -30,7 +30,7 @@ public class ModRegistries {
     public static final RegistryObject<Enchantment> FORTRESS_ENCHANTMENT = ENCHANTMENT_REGISTRY.register("fortress", FortressEnchantment::new);
     public static final RegistryObject<Enchantment> MULTIPLATE_ENCHANTMENT = ENCHANTMENT_REGISTRY.register("multiplate", MultiplateEnchantment::new);
     public static final RegistryObject<Enchantment> AWARENESS_ENCHANTMENT = ENCHANTMENT_REGISTRY.register(AwarenessEnchantment.ID, AwarenessEnchantment::new);
-    public static final RegistryObject<Enchantment> PREPAREDNESS = ENCHANTMENT_REGISTRY.register(PreparednessEnchantment.ID, PreparednessEnchantment::new);
+    public static final RegistryObject<Enchantment> PREPARATION_ENCHANTMENT = ENCHANTMENT_REGISTRY.register(PreparationEnchantment.ID, PreparationEnchantment::new);
 
     private static final DeferredRegister<MobEffect> MOB_EFFECT_REGISTRY = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, Imbuence.MODID);
     public static final RegistryObject<MobEffect> JUDGEMENT_EFFECT = MOB_EFFECT_REGISTRY.register("judgement", JudgementEffect::new);

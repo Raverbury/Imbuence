@@ -53,7 +53,7 @@ public class MarePotentiaEffect extends MobEffect {
         if (HAS_FORBIDDEN_SYZYGY) {
             event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, false, true));
         }
-        Imbuence.LOGGER.debug("shining maria procs");
+//        Imbuence.LOGGER.debug("shining maria procs");
         event.setAmount(event.getAmount() * (1 + (PERCENT_BONUS_DAMAGE / 100)));
     }
 
@@ -79,7 +79,7 @@ public class MarePotentiaEffect extends MobEffect {
         if (damage > 4 || !oddDamage) {
             return;
         }
-        Imbuence.LOGGER.debug("shining maria prevents " + damage + " damage at " + roundedX + ":Y:" + roundedZ);
+//        Imbuence.LOGGER.debug("shining maria prevents " + damage + " damage at " + roundedX + ":Y:" + roundedZ);
         event.setCanceled(true);
     }
 

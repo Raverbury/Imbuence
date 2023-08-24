@@ -8,26 +8,33 @@
   "enchantment.imbuence.fortress": "Fortress",
   "enchantment.imbuence.multiplate": "Multiplate",
   "enchantment.imbuence.awareness": "Awareness",
-  "enchantment.imbuence.preparedness": "Preparedness",
+  "enchantment.imbuence.preparation": "Preparation",
 
   "enchantment.imbuence.shadow_walker.desc": "Gains buffs while in the shadow.",
   "enchantment.imbuence.combat_engineer.desc": "While in main-hand, has a chance to repair the tool when attacked.",
   "enchantment.imbuence.crime.desc": "Blocking with a shield inflicts Judgement on the attacker.",
   "enchantment.imbuence.punishment.desc": "Increases damage against targets with Judgement.",
-  "enchantment.imbuence.sacred_corona.desc": "Gains Sancta Potentia during the day. It seems to be seeking something...",
-  "enchantment.imbuence.shining_maria.desc": "Gains Mare Potentia during the night. It seems to be seeking something...",
+  "enchantment.imbuence.sacred_corona.desc": "Gains Sancta Potentia during the day. It seems to be carrying out a long overdue mission...",
+  "enchantment.imbuence.shining_maria.desc": "Gains Mare Potentia during the night. It seems to be seeking a long overdue revenge...",
   "enchantment.imbuence.fortress.desc": "Increases damage based on the wearer's maximum health.",
-  "enchantment.imbuence.multiplate.desc": "Limits the amount of damage taken per attack.",
+  "enchantment.imbuence.multiplate.desc": "Limits the amount of damage taken per attack at the cost of durability.",
   "enchantment.imbuence.awareness.desc": "Periodically blocks the next instance of damage.",
-  "enchantment.imbuence.preparedness.desc": "Gains buffs upon entering combat.",
+  "enchantment.imbuence.preparation.desc": "Gains buffs upon entering combat.",
 
   "effect.imbuence.judgement": "Judgement",
   "effect.imbuence.sancta_potentia": "Sancta Potentia",
   "effect.imbuence.mare_potentia": "Mare Potentia",
   "effect.imbuence.forbidden_syzygy": "Forbidden Syzygy",
 
-  "effect.imbuence.judgement.description": "\"You are hereby denounced, guilty!\"",
+  "effect.imbuence.judgement.description": "\"You are hereby denounced as guilty!\"",
   "effect.imbuence.sancta_potentia.description": "All arrows inflict bonus flat damage on impact. Becomes immune to even-numbered damage below 5 on even-numbered tiles.",
   "effect.imbuence.mare_potentia.description": "All arrows inflict percentage bonus damage on impact. Becomes immune to odd-numbered damage below 5 on odd-numbered tiles.",
-  "effect.imbuence.forbidden_syzygy.description": "Applies the effect of both Sancta Potentia and Mare Potentia. Additionally applies Glowing to targets hit by your arrows."
+  "effect.imbuence.forbidden_syzygy.description": "Applies the effect of both Sancta Potentia and Mare Potentia. Additionally applies Glowing to targets hit by your arrows.",
+
+  "imbuence.advancement.root": "Imbuence",
+  "imbuence.advancement.daybreak": "Daybreak",
+
+  "imbuence.advancement.root.desc": "An extra touch of magic on your adventure.",
+  "imbuence.advancement.daybreak.desc": "A reunion of those who are chasing the past."
+
 }

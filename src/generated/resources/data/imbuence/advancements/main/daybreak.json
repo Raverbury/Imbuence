@@ -1,0 +1,36 @@
+{
+  "parent": "imbuence:main/root",
+  "criteria": {
+    "forbidden_syzygy": {
+      "conditions": {
+        "effects": {
+          "imbuence:forbidden_syzygy": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "imbuence.advancement.daybreak.desc"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:bow"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "imbuence.advancement.daybreak"
+    }
+  },
+  "requirements": [
+    [
+      "forbidden_syzygy"
+    ]
+  ],
+  "rewards": {
+    "experience": 200
+  }
+}

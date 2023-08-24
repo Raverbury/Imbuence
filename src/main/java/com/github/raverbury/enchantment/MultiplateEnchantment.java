@@ -49,12 +49,12 @@ public class MultiplateEnchantment extends UniqueChestplateEnchantment {
         }
         finalDamage = damageCap;
         ItemStack chestplate = entity.getItemBySlot(EquipmentSlot.CHEST);
-        Imbuence.LOGGER.debug("multiplate proc'd");
+//        Imbuence.LOGGER.debug("multiplate proc'd");
         if ((chestplate.getItem() instanceof ArmorItem) && chestplate.isDamageableItem()) {
             float absorbedDamage = event.getAmount() - damageCap;
             int durabilityPenalty = BASE_DURABILITY_PENALTY + (int) absorbedDamage;
             int durabilityDamage = chestplate.getDamageValue() + durabilityPenalty;
-            Imbuence.LOGGER.debug("absorbed " + absorbedDamage + " damage, durability penalty of " + durabilityPenalty);
+//            Imbuence.LOGGER.debug("absorbed " + absorbedDamage + " damage, durability penalty of " + durabilityPenalty);
             int finalDurabilityDamage = Math.min(chestplate.getMaxDamage(), durabilityDamage);
             chestplate.setDamageValue(finalDurabilityDamage);
         }

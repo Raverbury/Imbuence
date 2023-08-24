@@ -52,7 +52,7 @@ public class CrimeEnchantment extends Enchantment {
         int judgementDuration = (BASE_DURATION + DURATION_GROWTH * crimeLevel) * 20;
         int judgementAmplifier = BASE_EFFECT_AMPLIFIER + EFFECT_AMPLIFIER_GROWTH * crimeLevel;
         livingAttacker.addEffect(new MobEffectInstance(ModRegistries.JUDGEMENT_EFFECT.get(), judgementDuration, judgementAmplifier));
-        Imbuence.LOGGER.debug("applied judgement at amp " + judgementAmplifier);
+//        Imbuence.LOGGER.debug("applied judgement at amp " + judgementAmplifier);
     }
 
     @Override

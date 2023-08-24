@@ -21,8 +21,8 @@ public class AwarenessEnchantment extends UniqueChestplateEnchantment {
 
     public static final String ID = "awareness";
 
-    private static final float BASE_COOLDOWN = 21.25F;
-    private static final float COOLDOWN_DECREASE = 1.25F;
+    private static final float BASE_COOLDOWN = 30.25F;
+    private static final float COOLDOWN_DECREASE = 2.5F;
     private static final float MINIMUM_COOLDOWN = 10F;
 
     private static final String NBT_KEY = Imbuence.MODID + "." + ID + "." + "on_cd_till";
@@ -52,7 +52,7 @@ public class AwarenessEnchantment extends UniqueChestplateEnchantment {
         long nextCdFinishTick = currentTick + getTicksOnCd(awarenessLevel);
         nbt.putLong(NBT_KEY, nextCdFinishTick);
         entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.SHIELD_BLOCK, entity.getSoundSource(), 1F, 1F);
-        Imbuence.LOGGER.debug("Attack blocked, " + currentTick + " -> " + nextCdFinishTick);
+//        Imbuence.LOGGER.debug("Attack blocked, " + currentTick + " -> " + nextCdFinishTick);
     }
 
     public static long getTicksOnCd(int level) {

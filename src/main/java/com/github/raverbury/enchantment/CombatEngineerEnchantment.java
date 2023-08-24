@@ -42,7 +42,7 @@ public class CombatEngineerEnchantment extends Enchantment {
         if (damageSource == null || damageSource.getEntity() == null) {
             return;
         }
-        Imbuence.LOGGER.debug(damageSource.getEntity().toString());
+//        Imbuence.LOGGER.debug(damageSource.getEntity().toString());
         ItemStack mainHandItemStack = entity.getMainHandItem();
         if (!(mainHandItemStack.getItem() instanceof DiggerItem) || !mainHandItemStack.isDamageableItem() || !mainHandItemStack.isDamaged()) {
             return;
@@ -51,7 +51,7 @@ public class CombatEngineerEnchantment extends Enchantment {
         int procChance = BASE_PROC_CHANCE + PROC_CHANCE_GROWTH * combatEngineerLevel;
         if (roll <= procChance) {
             int damageHealed = BASE_DURABILITY_RESTORED + DURABILITY_RESTORED_GROWTH * combatEngineerLevel;
-            Imbuence.LOGGER.debug("healed item for " + damageHealed + " durability, rolled " + roll + ", proc chance " + procChance);
+//            Imbuence.LOGGER.debug("healed item for " + damageHealed + " durability, rolled " + roll + ", proc chance " + procChance);
             int newDamageValue = Math.max(0, mainHandItemStack.getDamageValue() - damageHealed);
             mainHandItemStack.setDamageValue(newDamageValue);
         }

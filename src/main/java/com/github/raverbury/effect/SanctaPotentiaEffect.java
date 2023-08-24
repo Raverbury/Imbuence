@@ -53,7 +53,7 @@ public class SanctaPotentiaEffect extends MobEffect {
         if (HAS_FORBIDDEN_SYZYGY) {
             event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, false, true));
         }
-        Imbuence.LOGGER.debug("sacred corona procs");
+//        Imbuence.LOGGER.debug("sacred corona procs");
         event.setAmount(event.getAmount() + BONUS_FLAT_DAMAGE);
     }
 
@@ -79,7 +79,7 @@ public class SanctaPotentiaEffect extends MobEffect {
         if (damage > 4 || !evenDamage) {
             return;
         }
-        Imbuence.LOGGER.debug("sacred corona prevents " + damage + " damage at " + roundedX + ":Y:" + roundedZ);
+//        Imbuence.LOGGER.debug("sacred corona prevents " + damage + " damage at " + roundedX + ":Y:" + roundedZ);
         event.setCanceled(true);
     }
 

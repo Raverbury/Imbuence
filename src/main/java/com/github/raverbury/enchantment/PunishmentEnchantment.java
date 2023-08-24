@@ -57,7 +57,7 @@ public class PunishmentEnchantment extends Enchantment {
         int judgementLevel = Objects.requireNonNull(target.getEffect(ModRegistries.JUDGEMENT_EFFECT.get())).getAmplifier() + 1;
         int minSyncLevel = Math.min(judgementLevel, punishmentLevel);
         float bonusDamage = BASE_BONUS_DAMAGE + BONUS_DAMAGE_GROWTH * minSyncLevel;
-        Imbuence.LOGGER.debug("min sync level of " + minSyncLevel + ", dealt " + bonusDamage + " damage");
+//        Imbuence.LOGGER.debug("min sync level of " + minSyncLevel + ", dealt " + bonusDamage + " damage");
         event.setAmount(event.getAmount() + bonusDamage);
     }
 

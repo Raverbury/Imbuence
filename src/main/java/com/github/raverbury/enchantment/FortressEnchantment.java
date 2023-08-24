@@ -22,7 +22,7 @@ public class FortressEnchantment extends UniqueChestplateEnchantment {
     private static final float MAX_HEALTH_RATIO_GROWTH = 5F;
 
     public FortressEnchantment() {
-        super(Rarity.UNCOMMON);
+        super(Rarity.RARE);
     }
 
     @SubscribeEvent
@@ -49,7 +49,7 @@ public class FortressEnchantment extends UniqueChestplateEnchantment {
         float maxHealthRatio = getMaxHealthRatio(fortressLevel);
         float bonusMaxHealthDamage = livingAttacker.getMaxHealth() * (maxHealthRatio / 100F);
         event.setAmount(event.getAmount() + bonusMaxHealthDamage);
-        Imbuence.LOGGER.debug("dealt " + maxHealthRatio + "% of " + livingAttacker.getMaxHealth() + " as " + bonusMaxHealthDamage + "bonus damage");
+//        Imbuence.LOGGER.debug("dealt " + maxHealthRatio + "% of " + livingAttacker.getMaxHealth() + " as " + bonusMaxHealthDamage + "bonus damage");
     }
 
     public static float getMaxHealthRatio(int level) {
