@@ -68,8 +68,8 @@ public class MarePotentiaEffect extends MobEffect {
         if (!HAS_MARE_POTENTIA && !HAS_FORBIDDEN_SYZYGY) {
             return;
         }
-        int roundedX = (int) entity.getX();
-        int roundedZ = (int) entity.getZ();
+        int roundedX = Math.abs((int) entity.getX());
+        int roundedZ = Math.abs((int) entity.getZ());
         boolean oddTile = (roundedX + roundedZ) % 2 == 1;
         if (!oddTile) {
             return;

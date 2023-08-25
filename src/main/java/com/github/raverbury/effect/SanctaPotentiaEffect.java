@@ -68,8 +68,8 @@ public class SanctaPotentiaEffect extends MobEffect {
         if (!HAS_SANCTA_POTENTIA && !HAS_FORBIDDEN_SYZYGY) {
             return;
         }
-        int roundedX = (int) entity.getX();
-        int roundedZ = (int) entity.getZ();
+        int roundedX = Math.abs((int) entity.getX());
+        int roundedZ = Math.abs((int) entity.getZ());
         boolean evenTile = (roundedX + roundedZ) % 2 == 0;
         if (!evenTile) {
             return;
