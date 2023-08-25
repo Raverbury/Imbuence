@@ -31,7 +31,7 @@ public class PunishmentEnchantment extends Enchantment {
 
     @SubscribeEvent
     public static void onLivingHurt(LivingDamageEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level.isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
         DamageSource damageSource = event.getSource();

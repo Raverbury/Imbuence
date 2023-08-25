@@ -32,7 +32,7 @@ public class ShadowWalkerEnchantment extends Enchantment {
 
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level.isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
         LivingEntity entity = event.getEntity();
@@ -41,7 +41,7 @@ public class ShadowWalkerEnchantment extends Enchantment {
         {
             return;
         }
-        Level level = entity.level;
+        Level level = entity.level();
         BlockPos blockPos = entity.blockPosition();
         int internalLightLevel = level.getRawBrightness(blockPos, level.getSkyDarken());
         // To prevent mods that raise level limit of enchantments from making this permanently active
@@ -72,6 +72,6 @@ public class ShadowWalkerEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchant(@NotNull ItemStack itemStack) {
-        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getSlot() == EquipmentSlot.FEET);
+        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getEquipmentSlot() == EquipmentSlot.FEET);
     }
 }

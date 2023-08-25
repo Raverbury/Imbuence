@@ -29,7 +29,7 @@ public class MultiplateEnchantment extends UniqueChestplateEnchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLivingHurt(LivingDamageEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level.isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
         LivingEntity entity = event.getEntity();
@@ -58,7 +58,7 @@ public class MultiplateEnchantment extends UniqueChestplateEnchantment {
             int finalDurabilityDamage = Math.min(chestplate.getMaxDamage(), durabilityDamage);
             chestplate.setDamageValue(finalDurabilityDamage);
         }
-        entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.SHIELD_BLOCK, entity.getSoundSource(), 1F, 1F);
+        entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.SHIELD_BLOCK, entity.getSoundSource(), 1F, 1F);
         event.setAmount(finalDamage);
     }
 
@@ -83,6 +83,6 @@ public class MultiplateEnchantment extends UniqueChestplateEnchantment {
 
     @Override
     public boolean canEnchant(@NotNull ItemStack itemStack) {
-        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getSlot() == EquipmentSlot.CHEST);
+        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getEquipmentSlot() == EquipmentSlot.CHEST);
     }
 }

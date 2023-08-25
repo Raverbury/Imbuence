@@ -30,7 +30,7 @@ public class CrimeEnchantment extends Enchantment {
 
     @SubscribeEvent
     public static void onShieldBlock(ShieldBlockEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level.isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
         int crimeLevel = EnchantmentHelper.getEnchantmentLevel(ModRegistries.CRIME_ENCHANTMENT.get(), event.getEntity());

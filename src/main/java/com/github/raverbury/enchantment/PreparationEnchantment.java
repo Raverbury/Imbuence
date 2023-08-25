@@ -35,7 +35,7 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onLivingAttack(LivingAttackEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level.isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
         LivingEntity entity = event.getEntity();
@@ -53,7 +53,7 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
         if (preparationLevel <= 0) {
             return;
         }
-        long currentTick = entity.level.getGameTime();
+        long currentTick = entity.level().getGameTime();
         long outOfCombatCd = BASE_COOLDOWN * 20;
         ItemStack chestplateItem = entity.getItemBySlot(EquipmentSlot.CHEST);
         CompoundTag nbt = chestplateItem.getOrCreateTag();
@@ -90,6 +90,6 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
 
     @Override
     public boolean canEnchant(@NotNull ItemStack itemStack) {
-        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getSlot() == EquipmentSlot.CHEST);
+        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getEquipmentSlot() == EquipmentSlot.CHEST);
     }
 }

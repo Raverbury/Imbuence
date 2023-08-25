@@ -27,7 +27,7 @@ public class MarePotentiaEffect extends MobEffect {
 
     @SubscribeEvent
     public static void onArrowHurtEvent(LivingDamageEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level.isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
         DamageSource damageSource = event.getSource();
@@ -59,7 +59,7 @@ public class MarePotentiaEffect extends MobEffect {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLivingDamageEvent(LivingDamageEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level.isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
         LivingEntity entity = event.getEntity();

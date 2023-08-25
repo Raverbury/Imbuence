@@ -30,7 +30,7 @@ public class CombatEngineerEnchantment extends Enchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLivingAttack(LivingAttackEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level.isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
         LivingEntity entity = event.getEntity();
@@ -47,7 +47,7 @@ public class CombatEngineerEnchantment extends Enchantment {
         if (!(mainHandItemStack.getItem() instanceof DiggerItem) || !mainHandItemStack.isDamageableItem() || !mainHandItemStack.isDamaged()) {
             return;
         }
-        int roll = entity.level.getRandom().nextIntBetweenInclusive(1, 100);
+        int roll = entity.level().getRandom().nextIntBetweenInclusive(1, 100);
         int procChance = BASE_PROC_CHANCE + PROC_CHANCE_GROWTH * combatEngineerLevel;
         if (roll <= procChance) {
             int damageHealed = BASE_DURABILITY_RESTORED + DURABILITY_RESTORED_GROWTH * combatEngineerLevel;

@@ -1,1 +1,0 @@
-change day checking stuff to use sun angle in Level#getTimeOfDay?
