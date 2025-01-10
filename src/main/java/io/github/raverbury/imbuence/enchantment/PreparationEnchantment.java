@@ -1,8 +1,8 @@
-package com.github.raverbury.enchantment;
+package io.github.raverbury.imbuence.enchantment;
 
-import com.github.raverbury.Imbuence;
-import com.github.raverbury.ModRegistries;
-import com.github.raverbury.enchantment.base.UniqueChestplateEnchantment;
+import io.github.raverbury.imbuence.Imbuence;
+import io.github.raverbury.imbuence.ModRegistries;
+import io.github.raverbury.imbuence.enchantment.base.UniqueChestplateEnchantment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,6 +26,7 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
     private static final int BASE_COOLDOWN = 20;
     private static final int BASE_DURATION = 0;
     private static final int DURATION_GROWTH = 1;
+    private static final int COOLDOWN_REDUCTION_GROWTH = 2;
 
     private static final String NBT_KEY = Imbuence.MODID + "." + ID + "." + "last_combat_event";
 
@@ -35,7 +36,8 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onLivingAttack(LivingAttackEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity()
+                .level().isClientSide()) {
             return;
         }
         LivingEntity entity = event.getEntity();
@@ -44,33 +46,46 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
             return;
         }
         LivingEntity attacker = (LivingEntity) damageSource.getEntity();
-        checkAndApplyPreparation(entity);
-        checkAndApplyPreparation(attacker);
+        checkAndApplyPreparation(entity, false);
+        checkAndApplyPreparation(attacker, true);
     }
 
-    private static void checkAndApplyPreparation(LivingEntity entity) {
-        int preparationLevel = EnchantmentHelper.getEnchantmentLevel(ModRegistries.PREPARATION_ENCHANTMENT.get(), entity);
+    private static void checkAndApplyPreparation(LivingEntity entity,
+                                                 boolean isAttacker) {
+        int preparationLevel = EnchantmentHelper.getEnchantmentLevel(
+                ModRegistries.PREPARATION_ENCHANTMENT.get(), entity);
         if (preparationLevel <= 0) {
             return;
         }
         long currentTick = entity.level().getGameTime();
-        long outOfCombatCd = BASE_COOLDOWN * 20;
+        long outOfCombatCd =
+                Math.max(200,
+                        (BASE_COOLDOWN - (long) preparationLevel * COOLDOWN_REDUCTION_GROWTH) * 20);
         ItemStack chestplateItem = entity.getItemBySlot(EquipmentSlot.CHEST);
         CompoundTag nbt = chestplateItem.getOrCreateTag();
-        long lastCombatTick = nbt.contains(NBT_KEY)? nbt.getLong(NBT_KEY) : 0;
+        long lastCombatTick = nbt.contains(NBT_KEY) ? nbt.getLong(NBT_KEY) : 0;
         long elapsedTick = currentTick - lastCombatTick;
         nbt.putLong(NBT_KEY, currentTick);
-//        Imbuence.LOGGER.debug("combat action at " + currentTick + ", exit combat at " + (currentTick + outOfCombatCd));
+        //        Imbuence.LOGGER.debug("combat action at " + currentTick + ", exit combat at " + (currentTick + outOfCombatCd));
         if (elapsedTick < outOfCombatCd) {
-//            Imbuence.LOGGER.debug(elapsedTick + " elapsed | cd " + outOfCombatCd);
+            //            Imbuence.LOGGER.debug(elapsedTick + " elapsed | cd " + outOfCombatCd);
+            return;
+        }
+        if (!isAttacker) {
             return;
         }
         int duration = BASE_DURATION + DURATION_GROWTH * preparationLevel;
-        entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, duration * 20, 0));
-        entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration * 20, 0));
-        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, duration * 20, 0));
-        entity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, duration * 20, 0));
-//        Imbuence.LOGGER.debug("preparedness proc'd");
+        entity.addEffect(
+                new MobEffectInstance(MobEffects.DAMAGE_BOOST, duration * 20,
+                        0));
+        entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,
+                duration * 20, 0));
+        entity.addEffect(
+                new MobEffectInstance(MobEffects.MOVEMENT_SPEED, duration * 20,
+                        0));
+        entity.addEffect(
+                new MobEffectInstance(MobEffects.DIG_SPEED, duration * 20, 0));
+        //        Imbuence.LOGGER.debug("preparedness proc'd");
     }
 
     @Override
@@ -90,6 +105,7 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
 
     @Override
     public boolean canEnchant(@NotNull ItemStack itemStack) {
-        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getEquipmentSlot() == EquipmentSlot.CHEST);
+        return super.canEnchant(
+                itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem) itemStack.getItem()).getEquipmentSlot() == EquipmentSlot.CHEST);
     }
 }

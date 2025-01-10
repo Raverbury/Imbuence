@@ -1,4 +1,4 @@
-package com.github.raverbury;
+package io.github.raverbury.imbuence;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;

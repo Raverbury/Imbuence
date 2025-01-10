@@ -9,6 +9,7 @@
   "enchantment.imbuence.multiplate": "Multiplate",
   "enchantment.imbuence.awareness": "Awareness",
   "enchantment.imbuence.preparation": "Preparation",
+  "enchantment.imbuence.afterburner": "Afterburner",
 
   "enchantment.imbuence.shadow_walker.desc": "Gains buffs while in the shadow.",
   "enchantment.imbuence.combat_engineer.desc": "While in main-hand, has a chance to repair the tool when attacked.",
@@ -19,7 +20,8 @@
   "enchantment.imbuence.fortress.desc": "Increases damage based on the wearer's maximum health.",
   "enchantment.imbuence.multiplate.desc": "Limits the amount of damage taken per attack at the cost of durability.",
   "enchantment.imbuence.awareness.desc": "Periodically blocks the next instance of damage.",
-  "enchantment.imbuence.preparation.desc": "Gains buffs upon entering combat.",
+  "enchantment.imbuence.preparation.desc": "Gains buffs when being the one initiating combat.",
+  "enchantment.imbuence.afterburner.desc": "Raises the minimum flight duration of firework rockets during flight.",
 
   "effect.imbuence.judgement": "Judgement",
   "effect.imbuence.sancta_potentia": "Sancta Potentia",
