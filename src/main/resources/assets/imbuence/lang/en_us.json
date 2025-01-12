@@ -11,6 +11,7 @@
   "enchantment.imbuence.preparation": "Preparation",
   "enchantment.imbuence.afterburner": "Afterburner",
   "enchantment.imbuence.rocket_specialist": "Rocket Specialist",
+  "enchantment.imbuence.defiance": "Defiance",
 
   "enchantment.imbuence.shadow_walker.desc": "Grants buffs while in the shadow.",
   "enchantment.imbuence.combat_engineer.desc": "While in main-hand, has a chance to repair the tool when attacked.",
@@ -24,6 +25,7 @@
   "enchantment.imbuence.preparation.desc": "Grants buffs when being the one initiating combat, recharges by staying out of combat.",
   "enchantment.imbuence.afterburner.desc": "Raises the minimum flight duration of firework rockets during flight.",
   "enchantment.imbuence.rocket_specialist.desc": "Vastly improves firework rockets but makes this weapon no longer accept arrows.",
+  "enchantment.imbuence.defiance.desc": "Reduces shield disable cooldown while knocking back and slowing the disabler.",
 
   "effect.imbuence.judgement": "Judgement",
   "effect.imbuence.sancta_potentia": "Sancta Potentia",

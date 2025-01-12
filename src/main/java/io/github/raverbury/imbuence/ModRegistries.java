@@ -58,6 +58,10 @@ public class ModRegistries {
             ENCHANTMENT_REGISTRY.register(
                     RocketSpecialistEnchantment.ID,
                     RocketSpecialistEnchantment::new);
+    public static final RegistryObject<Enchantment> DEFIANCE_ENCHANTMENT =
+            ENCHANTMENT_REGISTRY.register(
+                    DefianceEnchantment.ID,
+                    DefianceEnchantment::new);
 
     private static final DeferredRegister<MobEffect> MOB_EFFECT_REGISTRY = DeferredRegister.create(
             ForgeRegistries.MOB_EFFECTS, Imbuence.MODID);
