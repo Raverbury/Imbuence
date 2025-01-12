@@ -62,6 +62,10 @@ public class ModRegistries {
             ENCHANTMENT_REGISTRY.register(
                     DefianceEnchantment.ID,
                     DefianceEnchantment::new);
+    public static final RegistryObject<Enchantment> PUZZLE_ENCHANTMENT =
+            ENCHANTMENT_REGISTRY.register(
+                    PuzzleEnchantment.ID,
+                    PuzzleEnchantment::new);
 
     private static final DeferredRegister<MobEffect> MOB_EFFECT_REGISTRY = DeferredRegister.create(
             ForgeRegistries.MOB_EFFECTS, Imbuence.MODID);

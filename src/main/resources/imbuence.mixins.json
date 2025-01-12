@@ -7,8 +7,10 @@
     "CrossbowItemMixin",
     "FireworkRocketEntityMixin",
     "FireworkRocketItemMixin",
+    "MobEffectInstanceMixin",
     "MobMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "PotionItemMixin"
   ],
   "client": [],
   "server": [],
