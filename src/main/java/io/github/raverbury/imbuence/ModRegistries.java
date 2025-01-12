@@ -5,6 +5,7 @@ import io.github.raverbury.imbuence.effect.JudgementEffect;
 import io.github.raverbury.imbuence.effect.MarePotentiaEffect;
 import io.github.raverbury.imbuence.effect.SanctaPotentiaEffect;
 import io.github.raverbury.imbuence.enchantment.*;
+import io.github.raverbury.imbuence.enchantment.RocketSpecialistEnchantment;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -52,7 +53,11 @@ public class ModRegistries {
             PreparationEnchantment.ID, PreparationEnchantment::new);
     public static final RegistryObject<Enchantment> AFTERBURNER_ENCHANTMENT =
             ENCHANTMENT_REGISTRY.register(
-            AfterburnerEnchantment.ID, AfterburnerEnchantment::new);
+                    AfterburnerEnchantment.ID, AfterburnerEnchantment::new);
+    public static final RegistryObject<Enchantment> ROCKET_SPECIALIST_ENCHANTMENT =
+            ENCHANTMENT_REGISTRY.register(
+                    RocketSpecialistEnchantment.ID,
+                    RocketSpecialistEnchantment::new);
 
     private static final DeferredRegister<MobEffect> MOB_EFFECT_REGISTRY = DeferredRegister.create(
             ForgeRegistries.MOB_EFFECTS, Imbuence.MODID);

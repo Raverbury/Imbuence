@@ -7,7 +7,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.FireworkRocketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,9 +20,10 @@ public class FireworkRocketItemMixin {
                     value = "NEW",
                     target = "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/entity/projectile/FireworkRocketEntity;")
     )
-    private FireworkRocketEntity a(Level p_37058_, ItemStack p_37059_, LivingEntity p_37060_,
-                                   Operation<FireworkRocketEntity> original) {
-        ItemStack tmp = new ItemStack(Items.FIREWORK_ROCKET);
+    private FireworkRocketEntity imbuence$raiseMinFlightDuration(Level p_37058_,
+                                                                 ItemStack p_37059_, LivingEntity p_37060_,
+                                                                 Operation<FireworkRocketEntity> original) {
+        ItemStack tmp = p_37059_.copy();
         int afterburnerLevel = EnchantmentHelper.getEnchantmentLevel(
                 ModRegistries.AFTERBURNER_ENCHANTMENT.get(), p_37060_);
         int minFlightDuration = 1 + Math.min(afterburnerLevel, 3);

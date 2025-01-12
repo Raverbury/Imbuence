@@ -5,13 +5,15 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class UniqueChestplateEnchantment extends Enchantment {
-    protected UniqueChestplateEnchantment(Rarity rarity) {
-        super(rarity, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
+public abstract class UniqueHelmetEnchantment extends Enchantment {
+    protected UniqueHelmetEnchantment(Rarity rarity) {
+        super(rarity, EnchantmentCategory.ARMOR_HEAD,
+                new EquipmentSlot[]{EquipmentSlot.HEAD});
     }
 
     @Override
     protected boolean checkCompatibility(@NotNull Enchantment otherEnchantment) {
-        return super.checkCompatibility(otherEnchantment) && !(otherEnchantment instanceof UniqueChestplateEnchantment);
+        return super.checkCompatibility(
+                otherEnchantment) && !(otherEnchantment instanceof UniqueHelmetEnchantment);
     }
 }
