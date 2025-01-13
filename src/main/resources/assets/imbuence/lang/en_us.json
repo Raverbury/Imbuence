@@ -13,6 +13,7 @@
   "enchantment.imbuence.rocket_specialist": "Rocket Specialist",
   "enchantment.imbuence.defiance": "Defiance",
   "enchantment.imbuence.puzzle": "Puzzle",
+  "enchantment.imbuence.curse_of_the_dragon_palace": "Curse of the Dragon Palace",
 
   "enchantment.imbuence.shadow_walker.desc": "Grants buffs while in the shadow.",
   "enchantment.imbuence.combat_engineer.desc": "While in main-hand, has a chance to repair the tool when attacked.",
@@ -27,6 +28,7 @@
   "enchantment.imbuence.afterburner.desc": "Raises the minimum flight duration of firework rockets during flight.",
   "enchantment.imbuence.rocket_specialist.desc": "Vastly improves firework rockets but makes this weapon no longer accept arrows.",
   "enchantment.imbuence.defiance.desc": "Reduces shield disable cooldown while knocking back and slowing the disabler.",
+  "enchantment.imbuence.curse_of_the_dragon_palace.desc": "While underwater, time since last rest accumulates faster. May interact with certain items in special ways...",
 
   "effect.imbuence.judgement": "Judgement",
   "effect.imbuence.sancta_potentia": "Sancta Potentia",
@@ -40,8 +42,10 @@
 
   "imbuence.advancement.root": "Imbuence",
   "imbuence.advancement.daybreak": "Daybreak",
+  "imbuence.advancement.turtle": "Turtle of Urashima",
 
   "imbuence.advancement.root.desc": "An extra touch of magic on your adventure.",
-  "imbuence.advancement.daybreak.desc": "A reunion of those who are chasing the past."
+  "imbuence.advancement.daybreak.desc": "A reunion of those who are chasing the past.",
+  "imbuence.advancement.turtle.desc": "To a mortal, that jeweled treasure box is a curse."
 
 }

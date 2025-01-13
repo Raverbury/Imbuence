@@ -73,15 +73,6 @@ public class PuzzleEnchantment extends Enchantment {
             return;
         }
 
-        // if (e.potion.getItem() instanceof PotionItem potionItem) {
-        //     CompoundTag tag = e.potion.getTag();
-        //     if (tag != null) {
-        //         if (tag.getString("Potion").contains("turtle_master")) {
-        //             Imbuence.LOGGER.info("Woo");
-        //         }
-        //     }
-        // }
-
         e.mobEffectInstance =
                 new MobEffectInstance(e.mobEffectInstance.getEffect(),
                         e.mobEffectInstance.getDuration() * 2,

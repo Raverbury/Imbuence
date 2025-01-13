@@ -9,6 +9,7 @@ public class PotionDrinkAndApplyEffectEvent extends Event {
     public LivingEntity drinker;
     public ItemStack potion;
     public MobEffectInstance mobEffectInstance;
+    public boolean isCancelled;
 
     public PotionDrinkAndApplyEffectEvent(LivingEntity drinker,
                                           ItemStack potion,
@@ -16,5 +17,6 @@ public class PotionDrinkAndApplyEffectEvent extends Event {
         this.drinker = drinker;
         this.potion = potion;
         this.mobEffectInstance = mobEffectInstance;
+        this.isCancelled = false;
     }
 }

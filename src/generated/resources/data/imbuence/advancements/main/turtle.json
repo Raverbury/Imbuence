@@ -1,0 +1,42 @@
+{
+  "parent": "imbuence:main/root",
+  "criteria": {
+    "turtle_helmet_with_curse": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:turtle_helmet"
+            ],
+            "enchantments": [
+              {
+                "enchantment": "imbuence:curse_of_the_dragon_palace"
+              }
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "imbuence.advancement.turtle.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:turtle_helmet"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "imbuence.advancement.turtle"
+    }
+  },
+  "requirements": [
+    [
+      "turtle_helmet_with_curse"
+    ]
+  ]
+}

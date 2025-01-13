@@ -5,7 +5,6 @@ import io.github.raverbury.imbuence.effect.JudgementEffect;
 import io.github.raverbury.imbuence.effect.MarePotentiaEffect;
 import io.github.raverbury.imbuence.effect.SanctaPotentiaEffect;
 import io.github.raverbury.imbuence.enchantment.*;
-import io.github.raverbury.imbuence.enchantment.RocketSpecialistEnchantment;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -66,6 +65,11 @@ public class ModRegistries {
             ENCHANTMENT_REGISTRY.register(
                     PuzzleEnchantment.ID,
                     PuzzleEnchantment::new);
+    public static final RegistryObject<Enchantment> CURSE_OF_THE_DRAGON_PALACE_ENCHANTMENT =
+            ENCHANTMENT_REGISTRY.register(
+                    CurseOfTheDragonPalaceEnchantment.ID,
+                    CurseOfTheDragonPalaceEnchantment::new
+            );
 
     private static final DeferredRegister<MobEffect> MOB_EFFECT_REGISTRY = DeferredRegister.create(
             ForgeRegistries.MOB_EFFECTS, Imbuence.MODID);
