@@ -70,6 +70,16 @@ public class ModRegistries {
                     CurseOfTheDragonPalaceEnchantment.ID,
                     CurseOfTheDragonPalaceEnchantment::new
             );
+    public static final RegistryObject<Enchantment> WOLF_PACK_ENCHANTMENT =
+            ENCHANTMENT_REGISTRY.register(
+                    WolfPackEnchantment.ID,
+                    WolfPackEnchantment::new
+            );
+    public static final RegistryObject<Enchantment> COMMANDER_ENCHANTMENT =
+            ENCHANTMENT_REGISTRY.register(
+                    CommanderEnchantment.ID,
+                    CommanderEnchantment::new
+            );
 
     private static final DeferredRegister<MobEffect> MOB_EFFECT_REGISTRY = DeferredRegister.create(
             ForgeRegistries.MOB_EFFECTS, Imbuence.MODID);

@@ -71,7 +71,7 @@ public class CurseOfTheDragonPalaceEnchantment extends Enchantment {
                     if (e.mobEffectInstance.getEffect() == MobEffects.DAMAGE_RESISTANCE) {
                         e.mobEffectInstance = new MobEffectInstance(
                                 e.mobEffectInstance.getEffect(),
-                                e.mobEffectInstance.getDuration() * 48,
+                                e.mobEffectInstance.getDuration() * 24,
                                 e.mobEffectInstance.getAmplifier(),
                                 e.mobEffectInstance.isAmbient(),
                                 e.mobEffectInstance.isVisible(),

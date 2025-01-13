@@ -8,7 +8,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -38,7 +37,11 @@ public class PuzzleEnchantment extends Enchantment {
             return;
         }
         if (getSlotsWithPuzzleEnchantmentCount(e.player) == 3) {
-            e.player.addEffect(new MobEffectInstance(MobEffects.LUCK, 39, 2));
+            if (!e.player.hasEffect(MobEffects.LUCK)) {
+                e.player.addEffect(
+                        new MobEffectInstance(MobEffects.LUCK, 119, 2, true,
+                                true));
+            }
         }
     }
 
@@ -137,12 +140,6 @@ public class PuzzleEnchantment extends Enchantment {
     @Override
     public boolean isTreasureOnly() {
         return true;
-    }
-
-    @Override
-    public boolean canEnchant(@NotNull ItemStack itemStack) {
-        return super.canEnchant(
-                itemStack) && itemStack.isEnchantable();
     }
 }
 

@@ -1,12 +1,20 @@
 package io.github.raverbury.imbuence;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.world.entity.TamableAnimal;
+import io.github.raverbury.imbuence.util.Pair;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import org.slf4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Imbuence.MODID)
@@ -17,22 +25,30 @@ public class Imbuence {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public Imbuence() {
+        ModLoadingContext.get()
+                .registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
         ModRegistries.register();
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public static int getNearbyPetCounts(Player player) {
+    public static Pair<Integer, List<LivingEntity>> getAndCountNearbyPets(Player player) {
+        List<LivingEntity> nearbyEntitiesOwnedByPlayer = new ArrayList<>();
         int count = 0;
-        for (TamableAnimal animal :
-                player.level().getEntitiesOfClass(TamableAnimal.class,
-                        player.getBoundingBox().inflate(12))) {
-            if (animal.getOwnerUUID() == player.getUUID()) {
-                if (animal.getClass() == Wolf.class) {
+        for (LivingEntity livingEntity : player.level()
+                .getEntitiesOfClass(LivingEntity.class,
+                        player.getBoundingBox()
+                                .inflate(Config.PET_QUERY_RANGE.get()))) {
+            if (livingEntity instanceof OwnableEntity ownableEntity) {
+                if (Objects.equals(ownableEntity.getOwnerUUID(),
+                        player.getUUID())) {
                     count += 1;
+                    if (ownableEntity.getClass() == Wolf.class) {
+                        count += 1;
+                    }
+                    nearbyEntitiesOwnedByPlayer.add(livingEntity);
                 }
-                count += 1;
             }
         }
-        return count;
+        return new Pair<>(count, nearbyEntitiesOwnedByPlayer);
     }
 }
