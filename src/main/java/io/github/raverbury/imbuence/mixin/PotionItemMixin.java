@@ -28,7 +28,6 @@ public class PotionItemMixin {
                 new PotionDrinkAndApplyEffectEvent(
                         instance, itemStack, p_21165_);
         MinecraftForge.EVENT_BUS.post(event);
-        return original.call(instance,
-                new MobEffectInstance(event.mobEffectInstance));
+        return original.call(instance, event.mobEffectInstance);
     }
 }

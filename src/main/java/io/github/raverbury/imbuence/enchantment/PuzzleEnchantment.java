@@ -1,22 +1,20 @@
 package io.github.raverbury.imbuence.enchantment;
 
-import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import io.github.raverbury.imbuence.accessors.MobEffectInstanceAccessor;
 import io.github.raverbury.imbuence.events.PotionDrinkAndApplyEffectEvent;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
@@ -40,7 +38,26 @@ public class PuzzleEnchantment extends Enchantment {
             return;
         }
         if (getSlotsWithPuzzleEnchantmentCount(e.player) == 3) {
-            e.player.addEffect(new MobEffectInstance(MobEffects.LUCK, 2, 2));
+            e.player.addEffect(new MobEffectInstance(MobEffects.LUCK, 39, 2));
+        }
+    }
+
+    @SubscribeEvent
+    public static void livingAttackedHandler(LivingAttackEvent e) {
+        if (e.getEntity().level().isClientSide()) {
+            return;
+        }
+        if (getSlotsWithPuzzleEnchantmentCount(e.getEntity()) == 4) {
+            if (e.getSource()
+                    .getEntity() instanceof LivingEntity livingEntity) {
+                if (livingEntity.distanceToSqr(e.getEntity()) >= 64) {
+                    livingEntity.addEffect(
+                            new MobEffectInstance(MobEffects.GLOWING, 120, 0));
+                    livingEntity.addEffect(
+                            new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
+                                    60, 4));
+                }
+            }
         }
     }
 
@@ -56,14 +73,14 @@ public class PuzzleEnchantment extends Enchantment {
             return;
         }
 
-        if (e.potion.getItem() instanceof PotionItem potionItem) {
-            CompoundTag tag = e.potion.getTag();
-            if (tag != null) {
-                if (tag.getString("Potion").contains("turtle_master")) {
-                    Imbuence.LOGGER.info("Woo");
-                }
-            }
-        }
+        // if (e.potion.getItem() instanceof PotionItem potionItem) {
+        //     CompoundTag tag = e.potion.getTag();
+        //     if (tag != null) {
+        //         if (tag.getString("Potion").contains("turtle_master")) {
+        //             Imbuence.LOGGER.info("Woo");
+        //         }
+        //     }
+        // }
 
         e.mobEffectInstance =
                 new MobEffectInstance(e.mobEffectInstance.getEffect(),
@@ -74,6 +91,26 @@ public class PuzzleEnchantment extends Enchantment {
                         e.mobEffectInstance.showIcon(),
                         ((MobEffectInstanceAccessor) e.mobEffectInstance).imbuence$getHiddenMobEffectInstance(),
                         e.mobEffectInstance.getFactorData());
+    }
+
+    @SubscribeEvent
+    public static void entityDamageEvent(LivingHurtEvent e) {
+        if (e.getEntity().level().isClientSide()) {
+            return;
+        }
+        if (getSlotsWithPuzzleEnchantmentCount(e.getEntity()) == 6) {
+            if (e.getSource()
+                    .getEntity() instanceof LivingEntity livingEntity) {
+                if (livingEntity.getMaxHealth() > e.getEntity()
+                        .getMaxHealth()) {
+                    float damageReductionFactor = Math.min(0.5f,
+                            livingEntity.getMaxHealth() / e.getEntity()
+                                    .getMaxHealth() * 0.01f);
+                    e.setAmount(
+                            e.getAmount() * (1 - damageReductionFactor));
+                }
+            }
+        }
     }
 
     public static int getSlotsWithPuzzleEnchantmentCount(LivingEntity livingEntity) {

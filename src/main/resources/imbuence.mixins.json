@@ -4,13 +4,18 @@
   "package": "io.github.raverbury.imbuence.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AnimalMixin",
+    "AnvilMenuMixin",
     "CrossbowItemMixin",
+    "EnchantmentMenuMixin",
+    "EntityAccessor",
     "FireworkRocketEntityMixin",
     "FireworkRocketItemMixin",
     "MobEffectInstanceMixin",
     "MobMixin",
     "PlayerMixin",
-    "PotionItemMixin"
+    "PotionItemMixin",
+    "ZombieVillagerMixin"
   ],
   "client": [],
   "server": [],
