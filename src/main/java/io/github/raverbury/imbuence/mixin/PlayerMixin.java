@@ -3,7 +3,6 @@ package io.github.raverbury.imbuence.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import io.github.raverbury.imbuence.enchantment.DefianceEnchantment;
 import io.github.raverbury.imbuence.enchantment.PuzzleEnchantment;
@@ -21,7 +20,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin {
-    @Shadow public abstract InteractionResult interactOn(Entity p_36158_, InteractionHand p_36159_);
+    @Shadow
+    public abstract InteractionResult interactOn(Entity p_36158_, InteractionHand p_36159_);
 
     @WrapOperation(
             method = "disableShield",
@@ -55,7 +55,11 @@ public abstract class PlayerMixin {
                                               Operation<Void> original,
                                               @Local(argsOnly = true) LivingEntity livingEntity) {
         original.call(instance, p_36385_);
-        DefianceEnchantment.applySlowAndKnockback(livingEntity, instance);
+        if (EnchantmentHelper.getEnchantmentLevel(
+                ModRegistries.DEFIANCE_ENCHANTMENT.get(),
+                (Player) (Object) this) > 0) {
+            DefianceEnchantment.applySlowAndKnockback(livingEntity, instance);
+        }
     }
 
     @WrapOperation(
@@ -66,8 +70,9 @@ public abstract class PlayerMixin {
                             "causeFoodExhaustion(F)V")
     )
     private void imbuence$halfFoodExhaustion1(Player instance, float p_36400_,
-                       Operation<Void> original) {
-        if (PuzzleEnchantment.getSlotsWithPuzzleEnchantmentCount(instance) != 5) {
+                                              Operation<Void> original) {
+        if (PuzzleEnchantment.getSlotsWithPuzzleEnchantmentCount(
+                instance) != 5) {
             original.call(instance, p_36400_);
             return;
         }
@@ -86,8 +91,9 @@ public abstract class PlayerMixin {
                             "causeFoodExhaustion(F)V")
     )
     private void imbuence$halfFoodExhaustion2(Player instance, float p_36400_,
-                       Operation<Void> original) {
-        if (PuzzleEnchantment.getSlotsWithPuzzleEnchantmentCount(instance) != 5) {
+                                              Operation<Void> original) {
+        if (PuzzleEnchantment.getSlotsWithPuzzleEnchantmentCount(
+                instance) != 5) {
             original.call(instance, p_36400_);
             return;
         }
