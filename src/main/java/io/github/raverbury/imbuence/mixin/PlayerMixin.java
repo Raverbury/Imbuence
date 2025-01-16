@@ -36,8 +36,9 @@ public abstract class PlayerMixin {
                                                       Operation<Void> original) {
         if (EnchantmentHelper.getEnchantmentLevel(
                 ModRegistries.DEFIANCE_ENCHANTMENT.get(),
-                (Player) (Object) this) < 0) {
+                (Player) (Object) this) == 0) {
             original.call(instance, p_41525_, cooldown);
+            return;
         }
         original.call(instance, p_41525_,
                 (int) ((float) cooldown * (1 - DefianceEnchantment.SHIELD_DISABLE_COOLDOWN_REDUCTION_PERCENTAGE)));

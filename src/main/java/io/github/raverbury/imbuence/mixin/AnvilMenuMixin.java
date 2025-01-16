@@ -24,6 +24,6 @@ public class AnvilMenuMixin {
             original.call(instance, i);
             return;
         }
-        original.call(instance, Math.max(-1, (int) (((float) i) * 0.5f)));
+        original.call(instance, Math.min(-1, (int) (((float) i) * 0.5f)));
     }
 }
