@@ -2,6 +2,7 @@ package io.github.raverbury.imbuence.enchantment;
 
 import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
+import io.github.raverbury.imbuence.enchantment.base.ModdedAwareEnchantment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -20,10 +21,10 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber(modid = Imbuence.MODID)
-public class ShadowWalkerEnchantment extends Enchantment {
+public class ShadowWalkerEnchantment extends ModdedAwareEnchantment {
 
     private static final int MIN_INTERNAL_LIGHT_LEVEL_THRESHOLD = 0;
-    private static final int MAX_INTERNAL_LIGHT_LEVEL_THRESHOLD = 6;
+    private static final int MAX_INTERNAL_LIGHT_LEVEL_THRESHOLD = 4;
     private static final int INTERNAL_LIGHT_LEVEL_THRESHOLD_GROWTH = 2;
 
     public ShadowWalkerEnchantment() {
@@ -73,5 +74,15 @@ public class ShadowWalkerEnchantment extends Enchantment {
     @Override
     public boolean canEnchant(@NotNull ItemStack itemStack) {
         return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getEquipmentSlot() == EquipmentSlot.FEET);
+    }
+
+    @Override
+    public int getLevelOneCost() {
+        return 27;
+    }
+
+    @Override
+    public int getMaxModdedLevel() {
+        return getMaxLevel();
     }
 }

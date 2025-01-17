@@ -72,13 +72,18 @@ public class MultiplateEnchantment extends UniqueChestplateEnchantment {
     }
 
     @Override
-    public int getMinCost(int level) {
-        return 21 + level * 2;
+    public int getLevelOneCost() {
+        return 23;
+    }
+
+    @Override
+    public int getMaxModdedLevel() {
+        return 6;
     }
 
     @Override
     public int getMaxCost(int level) {
-        return getMinCost(level) + 17;
+        return getMinCost(level) + 22;
     }
 
     @Override

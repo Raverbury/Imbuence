@@ -6,14 +6,16 @@ import com.llamalad7.mixinextras.sugar.Local;
 import io.github.raverbury.imbuence.ModRegistries;
 import io.github.raverbury.imbuence.enchantment.DefianceEnchantment;
 import io.github.raverbury.imbuence.enchantment.PuzzleEnchantment;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import io.github.raverbury.imbuence.events.CalculateBonusDamageFromEnchantmentEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(Player.class)
 public abstract class PlayerMixin {
     @Shadow
-    public abstract InteractionResult interactOn(Entity p_36158_, InteractionHand p_36159_);
+    public abstract float getAttackStrengthScale(float p_36404_);
 
     @WrapOperation(
             method = "disableShield",
@@ -102,5 +104,23 @@ public abstract class PlayerMixin {
             return;
         }
         original.call(instance, p_36400_ * 0.5f);
+    }
+
+    @WrapOperation(
+            method = "attack",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F")
+    )
+    private float imbuence$dispatchCBDFEE(ItemStack handItem, MobType p_44835_,
+                                     Operation<Float> original, @Local(argsOnly = true) Entity entity) {
+        float attackStrengthScale = this.getAttackStrengthScale(0.5f);
+        CalculateBonusDamageFromEnchantmentEvent event =
+                new CalculateBonusDamageFromEnchantmentEvent(
+                        (LivingEntity) (Object) this,
+                        handItem, entity, attackStrengthScale);
+        MinecraftForge.EVENT_BUS.post(event
+        );
+        return original.call(handItem, p_44835_) + event.customBonusDamage;
     }
 }

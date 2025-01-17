@@ -1,7 +1,7 @@
 package io.github.raverbury.imbuence.enchantment;
 
-import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
+import io.github.raverbury.imbuence.enchantment.base.ModdedAwareEnchantment;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber
-public class CrimeEnchantment extends Enchantment {
+public class CrimeEnchantment extends ModdedAwareEnchantment {
 
     private static final int BASE_DURATION = 3;
     private static final int DURATION_GROWTH = 1;
@@ -25,15 +25,18 @@ public class CrimeEnchantment extends Enchantment {
     private static final int EFFECT_AMPLIFIER_GROWTH = 1;
 
     public CrimeEnchantment() {
-        super(Rarity.UNCOMMON, ModRegistries.SHIELD_CATEGORY, new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+        super(Rarity.UNCOMMON, ModRegistries.SHIELD_CATEGORY,
+                new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
     }
 
     @SubscribeEvent
     public static void onShieldBlock(ShieldBlockEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity()
+                .level().isClientSide()) {
             return;
         }
-        int crimeLevel = EnchantmentHelper.getEnchantmentLevel(ModRegistries.CRIME_ENCHANTMENT.get(), event.getEntity());
+        int crimeLevel = EnchantmentHelper.getEnchantmentLevel(
+                ModRegistries.CRIME_ENCHANTMENT.get(), event.getEntity());
         if (crimeLevel <= 0) {
             return;
         }
@@ -51,8 +54,10 @@ public class CrimeEnchantment extends Enchantment {
         LivingEntity livingAttacker = (LivingEntity) attacker;
         int judgementDuration = (BASE_DURATION + DURATION_GROWTH * crimeLevel) * 20;
         int judgementAmplifier = BASE_EFFECT_AMPLIFIER + EFFECT_AMPLIFIER_GROWTH * crimeLevel;
-        livingAttacker.addEffect(new MobEffectInstance(ModRegistries.JUDGEMENT_EFFECT.get(), judgementDuration, judgementAmplifier));
-//        Imbuence.LOGGER.debug("applied judgement at amp " + judgementAmplifier);
+        livingAttacker.addEffect(
+                new MobEffectInstance(ModRegistries.JUDGEMENT_EFFECT.get(),
+                        judgementDuration, judgementAmplifier));
+        //        Imbuence.LOGGER.debug("applied judgement at amp " + judgementAmplifier);
     }
 
     @Override
@@ -66,17 +71,23 @@ public class CrimeEnchantment extends Enchantment {
     }
 
     @Override
-    public int getMinCost(int level) {
-        return 11 + level * 4;
+    public int getLevelOneCost() {
+        return 15;
+    }
+
+    @Override
+    public int getMaxModdedLevel() {
+        return 6;
     }
 
     @Override
     public int getMaxCost(int level) {
-        return getMinCost(level) + 12;
+        return getMinCost(level) + 12 + 4 * level;
     }
 
     @Override
     public boolean canEnchant(@NotNull ItemStack itemStack) {
-        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ShieldItem);
+        return super.canEnchant(
+                itemStack) && (itemStack.getItem() instanceof ShieldItem);
     }
 }

@@ -27,6 +27,7 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
     private static final int BASE_DURATION = 0;
     private static final int DURATION_GROWTH = 1;
     private static final int COOLDOWN_REDUCTION_GROWTH = 2;
+    private static final int MIN_COOLDOWN = 8;
 
     private static final String NBT_KEY = Imbuence.MODID + "." + ID + "." + "last_combat_event";
 
@@ -59,7 +60,7 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
         }
         long currentTick = entity.level().getGameTime();
         long outOfCombatCd =
-                Math.max(200,
+                Math.max(20 * MIN_COOLDOWN,
                         (BASE_COOLDOWN - (long) preparationLevel * COOLDOWN_REDUCTION_GROWTH) * 20);
         ItemStack chestplateItem = entity.getItemBySlot(EquipmentSlot.CHEST);
         CompoundTag nbt = chestplateItem.getOrCreateTag();
@@ -94,8 +95,13 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
     }
 
     @Override
-    public int getMinCost(int level) {
-        return 16 + level * 3;
+    public int getLevelOneCost() {
+        return 19;
+    }
+
+    @Override
+    public int getMaxModdedLevel() {
+        return 5;
     }
 
     @Override

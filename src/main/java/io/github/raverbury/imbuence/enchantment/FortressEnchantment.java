@@ -3,6 +3,7 @@ package io.github.raverbury.imbuence.enchantment;
 import io.github.raverbury.imbuence.Config;
 import io.github.raverbury.imbuence.ModRegistries;
 import io.github.raverbury.imbuence.enchantment.base.UniqueChestplateEnchantment;
+import io.github.raverbury.imbuence.events.CalculateBonusDamageFromEnchantmentEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,7 +20,24 @@ import org.jetbrains.annotations.NotNull;
 public class FortressEnchantment extends UniqueChestplateEnchantment {
 
     public FortressEnchantment() {
-        super(Rarity.RARE);
+        super(Rarity.VERY_RARE);
+    }
+
+    @SubscribeEvent
+    public static void onCBDFEE(CalculateBonusDamageFromEnchantmentEvent event) {
+        if (event.isCanceled() || event.attacker == null || !event.handItem.isEmpty()) {
+            return;
+        }
+        int fortressLevel = EnchantmentHelper.getEnchantmentLevel(
+                ModRegistries.FORTRESS_ENCHANTMENT.get(), event.attacker);
+        if (fortressLevel <= 0) {
+            return;
+        }
+        double maxHealthRatio =
+                getMaxHealthRatio(fortressLevel);
+        double bonusMaxHealthDamage =
+                event.attacker.getMaxHealth() * maxHealthRatio;
+        event.customBonusDamage += (float) bonusMaxHealthDamage * event.attackStrengthScale;
     }
 
     @SubscribeEvent
@@ -46,13 +64,15 @@ public class FortressEnchantment extends UniqueChestplateEnchantment {
         }
         double maxHealthRatio =
                 getMaxHealthRatio(fortressLevel);
-        if (((LivingEntity) attacker).getMainHandItem().isEmpty()) {
-            maxHealthRatio *= Config.FORTRESS_PUNCH_SCALING.get();
+        double bonusMaxHealthDamage = 2;
+        if (Config.FORTRESS_SCALES_WORSE_AS_MAX_HEALTH_INCREASE.get()) {
+            bonusMaxHealthDamage =
+                    (livingAttacker.getMaxHealth() + 20) / 1.3 * maxHealthRatio;
+        } else {
+            bonusMaxHealthDamage =
+                    livingAttacker.getMaxHealth() * maxHealthRatio;
         }
-        double bonusMaxHealthDamage =
-                livingAttacker.getMaxHealth() * maxHealthRatio;
         event.setAmount(event.getAmount() + (float) bonusMaxHealthDamage);
-        //        Imbuence.LOGGER.debug("dealt " + maxHealthRatio + "% of " + livingAttacker.getMaxHealth() + " as " + bonusMaxHealthDamage + "bonus damage");
     }
 
     public static double getMaxHealthRatio(int level) {
@@ -65,13 +85,18 @@ public class FortressEnchantment extends UniqueChestplateEnchantment {
     }
 
     @Override
-    public int getMinCost(int level) {
-        return 12 + level * 3;
+    public int getLevelOneCost() {
+        return 25;
+    }
+
+    @Override
+    public int getMaxModdedLevel() {
+        return 5;
     }
 
     @Override
     public int getMaxCost(int level) {
-        return getMinCost(level) + 16;
+        return getMinCost(level) + 16 + 8 * level;
     }
 
     @Override

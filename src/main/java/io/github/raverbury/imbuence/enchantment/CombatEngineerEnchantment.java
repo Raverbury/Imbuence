@@ -2,6 +2,7 @@ package io.github.raverbury.imbuence.enchantment;
 
 import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
+import io.github.raverbury.imbuence.enchantment.base.ModdedAwareEnchantment;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber(modid = Imbuence.MODID)
-public class CombatEngineerEnchantment extends Enchantment {
+public class CombatEngineerEnchantment extends ModdedAwareEnchantment {
 
     public static final int BASE_PROC_CHANCE = 10;
     public static final int PROC_CHANCE_GROWTH = 10;
@@ -25,16 +26,19 @@ public class CombatEngineerEnchantment extends Enchantment {
     public static final int DURABILITY_RESTORED_GROWTH = 1;
 
     public CombatEngineerEnchantment() {
-        super(Rarity.RARE, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Rarity.RARE, EnchantmentCategory.DIGGER,
+                new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLivingAttack(LivingAttackEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity()
+                .level().isClientSide()) {
             return;
         }
         LivingEntity entity = event.getEntity();
-        int combatEngineerLevel = EnchantmentHelper.getEnchantmentLevel(ModRegistries.COMBAT_ENGINEER_ENCHANTMENT.get(), entity);
+        int combatEngineerLevel = EnchantmentHelper.getEnchantmentLevel(
+                ModRegistries.COMBAT_ENGINEER_ENCHANTMENT.get(), entity);
         if (combatEngineerLevel <= 0) {
             return;
         }
@@ -42,7 +46,7 @@ public class CombatEngineerEnchantment extends Enchantment {
         if (damageSource == null || damageSource.getEntity() == null) {
             return;
         }
-//        Imbuence.LOGGER.debug(damageSource.getEntity().toString());
+        //        Imbuence.LOGGER.debug(damageSource.getEntity().toString());
         ItemStack mainHandItemStack = entity.getMainHandItem();
         if (!(mainHandItemStack.getItem() instanceof DiggerItem) || !mainHandItemStack.isDamageableItem() || !mainHandItemStack.isDamaged()) {
             return;
@@ -51,8 +55,9 @@ public class CombatEngineerEnchantment extends Enchantment {
         int procChance = BASE_PROC_CHANCE + PROC_CHANCE_GROWTH * combatEngineerLevel;
         if (roll <= procChance) {
             int damageHealed = BASE_DURABILITY_RESTORED + DURABILITY_RESTORED_GROWTH * combatEngineerLevel;
-//            Imbuence.LOGGER.debug("healed item for " + damageHealed + " durability, rolled " + roll + ", proc chance " + procChance);
-            int newDamageValue = Math.max(0, mainHandItemStack.getDamageValue() - damageHealed);
+            //            Imbuence.LOGGER.debug("healed item for " + damageHealed + " durability, rolled " + roll + ", proc chance " + procChance);
+            int newDamageValue = Math.max(0,
+                    mainHandItemStack.getDamageValue() - damageHealed);
             mainHandItemStack.setDamageValue(newDamageValue);
         }
     }
@@ -68,17 +73,23 @@ public class CombatEngineerEnchantment extends Enchantment {
     }
 
     @Override
-    public int getMinCost(int level) {
-        return 17 + level * 3;
+    public int getLevelOneCost() {
+        return 17;
+    }
+
+    @Override
+    public int getMaxModdedLevel() {
+        return getMaxLevel();
     }
 
     @Override
     public int getMaxCost(int level) {
-        return 27 + level * 4;
+        return getMinCost(level) + 23;
     }
 
     @Override
     public boolean canEnchant(@NotNull ItemStack itemStack) {
-        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof DiggerItem);
+        return super.canEnchant(
+                itemStack) && (itemStack.getItem() instanceof DiggerItem);
     }
 }

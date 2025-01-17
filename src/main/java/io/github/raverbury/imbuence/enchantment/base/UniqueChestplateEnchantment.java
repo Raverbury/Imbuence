@@ -5,7 +5,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class UniqueChestplateEnchantment extends Enchantment {
+public abstract class UniqueChestplateEnchantment extends ModdedAwareEnchantment {
     protected UniqueChestplateEnchantment(Rarity rarity) {
         super(rarity, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[]{EquipmentSlot.CHEST});
     }

@@ -1,6 +1,7 @@
 package io.github.raverbury.imbuence.enchantment;
 
 import io.github.raverbury.imbuence.ModRegistries;
+import io.github.raverbury.imbuence.enchantment.base.ModdedAwareEnchantment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber
-public class RocketSpecialistEnchantment extends Enchantment {
+public class RocketSpecialistEnchantment extends ModdedAwareEnchantment {
 
     public static final String ID = "rocket_specialist";
 
@@ -58,13 +59,18 @@ public class RocketSpecialistEnchantment extends Enchantment {
     }
 
     @Override
-    public int getMinCost(int level) {
-        return 21 + level * 3;
+    public int getLevelOneCost() {
+        return 19;
+    }
+
+    @Override
+    public int getMaxModdedLevel() {
+        return 5;
     }
 
     @Override
     public int getMaxCost(int level) {
-        return getMinCost(level) + 23;
+        return getMinCost(level) + 38;
     }
 
     @Override

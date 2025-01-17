@@ -3,6 +3,7 @@ package io.github.raverbury.imbuence.enchantment;
 import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import io.github.raverbury.imbuence.enchantment.base.UniqueChestplateEnchantment;
+import io.github.raverbury.imbuence.util.MathUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,11 +22,13 @@ public class AwarenessEnchantment extends UniqueChestplateEnchantment {
 
     public static final String ID = "awareness";
 
-    private static final float BASE_COOLDOWN = 30.25F;
-    private static final float COOLDOWN_DECREASE = 2.5F;
-    private static final float MINIMUM_COOLDOWN = 10F;
+    private static final float BASE_COOLDOWN = 25F;
+    private static final float COOLDOWN_DECREASE = 3F;
+    private static final float MINIMUM_COOLDOWN = 4F;
 
     private static final String NBT_KEY = Imbuence.MODID + "." + ID + "." + "on_cd_till";
+
+    private static final int MAX_MODDED_LEVEL = 10;
 
     public AwarenessEnchantment() {
         super(Rarity.RARE);
@@ -33,11 +36,13 @@ public class AwarenessEnchantment extends UniqueChestplateEnchantment {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onLivingDamage(LivingDamageEvent event) {
-        if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
+        if (event.isCanceled() || event.getEntity() == null || event.getEntity()
+                .level().isClientSide()) {
             return;
         }
         LivingEntity entity = event.getEntity();
-        int awarenessLevel = EnchantmentHelper.getEnchantmentLevel(ModRegistries.AWARENESS_ENCHANTMENT.get(), entity);
+        int awarenessLevel = EnchantmentHelper.getEnchantmentLevel(
+                ModRegistries.AWARENESS_ENCHANTMENT.get(), entity);
         if (awarenessLevel <= 0) {
             return;
         }
@@ -51,12 +56,16 @@ public class AwarenessEnchantment extends UniqueChestplateEnchantment {
         event.setCanceled(true);
         long nextCdFinishTick = currentTick + getTicksOnCd(awarenessLevel);
         nbt.putLong(NBT_KEY, nextCdFinishTick);
-        entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.SHIELD_BLOCK, entity.getSoundSource(), 1F, 1F);
-//        Imbuence.LOGGER.debug("Attack blocked, " + currentTick + " -> " + nextCdFinishTick);
+        entity.level()
+                .playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                        SoundEvents.SHIELD_BLOCK, entity.getSoundSource(), 1F,
+                        1F);
+        //        Imbuence.LOGGER.debug("Attack blocked, " + currentTick + " -> " + nextCdFinishTick);
     }
 
     public static long getTicksOnCd(int level) {
-        return (long) (Math.max((BASE_COOLDOWN - COOLDOWN_DECREASE * level), MINIMUM_COOLDOWN) * 20);
+        return (long) (Math.max((BASE_COOLDOWN - COOLDOWN_DECREASE * level),
+                MINIMUM_COOLDOWN) * 20);
     }
 
     @Override
@@ -65,8 +74,13 @@ public class AwarenessEnchantment extends UniqueChestplateEnchantment {
     }
 
     @Override
-    public int getMinCost(int level) {
-        return 16 + level * 3;
+    public int getLevelOneCost() {
+        return 12;
+    }
+
+    @Override
+    public int getMaxModdedLevel() {
+        return 7;
     }
 
     @Override
@@ -76,6 +90,7 @@ public class AwarenessEnchantment extends UniqueChestplateEnchantment {
 
     @Override
     public boolean canEnchant(@NotNull ItemStack itemStack) {
-        return super.canEnchant(itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem)itemStack.getItem()).getEquipmentSlot() == EquipmentSlot.CHEST);
+        return super.canEnchant(
+                itemStack) && (itemStack.getItem() instanceof ArmorItem && ((ArmorItem) itemStack.getItem()).getEquipmentSlot() == EquipmentSlot.CHEST);
     }
 }

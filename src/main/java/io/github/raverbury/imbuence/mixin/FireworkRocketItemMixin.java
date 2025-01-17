@@ -3,6 +3,7 @@ package io.github.raverbury.imbuence.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import io.github.raverbury.imbuence.ModRegistries;
+import io.github.raverbury.imbuence.enchantment.AfterburnerEnchantment;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.FireworkRocketItem;
@@ -26,7 +27,8 @@ public class FireworkRocketItemMixin {
         ItemStack tmp = p_37059_.copy();
         int afterburnerLevel = EnchantmentHelper.getEnchantmentLevel(
                 ModRegistries.AFTERBURNER_ENCHANTMENT.get(), p_37060_);
-        int minFlightDuration = 1 + Math.min(afterburnerLevel, 3);
+        int minFlightDuration =
+                AfterburnerEnchantment.getMininumFlightDuration(afterburnerLevel);
         int initialFlightDuration =
                 p_37059_.getOrCreateTagElement("Fireworks").getByte("Flight");
         FireworkRocketItem.setDuration(tmp,

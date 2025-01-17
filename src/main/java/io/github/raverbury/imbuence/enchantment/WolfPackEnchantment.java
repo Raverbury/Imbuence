@@ -70,8 +70,13 @@ public class WolfPackEnchantment extends UniqueChestplateEnchantment {
     }
 
     @Override
-    public int getMinCost(int level) {
-        return 25 + level * 4;
+    public int getLevelOneCost() {
+        return 29;
+    }
+
+    @Override
+    public int getMaxModdedLevel() {
+        return getMaxLevel();
     }
 
     @Override
