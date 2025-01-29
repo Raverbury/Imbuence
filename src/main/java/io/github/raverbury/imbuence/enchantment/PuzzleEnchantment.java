@@ -1,8 +1,12 @@
 package io.github.raverbury.imbuence.enchantment;
 
+import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import io.github.raverbury.imbuence.accessors.MobEffectInstanceAccessor;
 import io.github.raverbury.imbuence.events.PotionDrinkAndApplyEffectEvent;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -13,6 +17,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -29,6 +34,29 @@ public class PuzzleEnchantment extends Enchantment {
                         EquipmentSlot.HEAD, EquipmentSlot.CHEST,
                         EquipmentSlot.LEGS, EquipmentSlot.FEET
                 });
+    }
+
+    @SubscribeEvent
+    public static void livingChangeEquipmentHandler(LivingEquipmentChangeEvent e) {
+        if (e.getEntity() instanceof ServerPlayer player) {
+            int puzzleCount = getSlotsWithPuzzleEnchantmentCount(player);
+            if (puzzleCount == 0) {
+                return;
+            }
+            ResourceLocation advancementId =
+                    new ResourceLocation(Imbuence.MODID, "main/puzzle_" +
+                            puzzleCount);
+            Advancement advancement =
+                    player.server.getAdvancements()
+                            .getAdvancement(advancementId);
+            if (advancement == null) {
+                Imbuence.LOGGER.warn("Cannot get {} advancement",
+                        advancementId);
+                return;
+            }
+            player.getAdvancements().award(advancement,
+                    "equipments_with_puzzle");
+        }
     }
 
     @SubscribeEvent

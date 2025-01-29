@@ -1,0 +1,28 @@
+{
+  "parent": "imbuence:main/puzzle_3",
+  "criteria": {
+    "equipments_with_puzzle": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "imbuence.advancement.puzzle_4.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:bow"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "imbuence.advancement.puzzle_4"
+    }
+  },
+  "requirements": [
+    [
+      "equipments_with_puzzle"
+    ]
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "parent": "imbuence:main/puzzle_5",
+  "criteria": {
+    "equipments_with_puzzle": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "imbuence.advancement.puzzle_6.desc"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:iron_chestplate"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "imbuence.advancement.puzzle_6"
+    }
+  },
+  "requirements": [
+    [
+      "equipments_with_puzzle"
+    ]
+  ]
+}

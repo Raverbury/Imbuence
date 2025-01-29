@@ -1,6 +1,5 @@
 package io.github.raverbury.imbuence.effect;
 
-import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -25,8 +24,8 @@ public class MarePotentiaEffect extends MobEffect {
         super(MobEffectCategory.BENEFICIAL, 0x1F8AC4);
     }
 
-    @SubscribeEvent
-    public static void onArrowHurtEvent(LivingDamageEvent event) {
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public static void onArrowHurtEvent(LivingHurtEvent event) {
         if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
@@ -53,7 +52,6 @@ public class MarePotentiaEffect extends MobEffect {
         if (HAS_FORBIDDEN_SYZYGY) {
             event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, false, true));
         }
-//        Imbuence.LOGGER.debug("shining maria procs");
         event.setAmount(event.getAmount() * (1 + (PERCENT_BONUS_DAMAGE / 100)));
     }
 
@@ -79,7 +77,6 @@ public class MarePotentiaEffect extends MobEffect {
         if (damage > 4 || !oddDamage) {
             return;
         }
-//        Imbuence.LOGGER.debug("shining maria prevents " + damage + " damage at " + roundedX + ":Y:" + roundedZ);
         event.setCanceled(true);
     }
 

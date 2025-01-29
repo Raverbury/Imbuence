@@ -1,0 +1,28 @@
+{
+  "parent": "imbuence:main/puzzle_2",
+  "criteria": {
+    "equipments_with_puzzle": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "imbuence.advancement.puzzle_3.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:rabbit_foot"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "imbuence.advancement.puzzle_3"
+    }
+  },
+  "requirements": [
+    [
+      "equipments_with_puzzle"
+    ]
+  ]
+}

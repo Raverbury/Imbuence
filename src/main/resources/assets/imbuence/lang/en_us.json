@@ -46,7 +46,19 @@
   "imbuence.advancement.root": "Imbuence",
   "imbuence.advancement.daybreak": "Daybreak",
   "imbuence.advancement.turtle": "Turtle of Urashima",
+  "imbuence.advancement.puzzle_1": "Prepare for Puzzle",
+  "imbuence.advancement.puzzle_2": "And Make it Double",
+  "imbuence.advancement.puzzle_3": "Rules for Three, Not for Me",
+  "imbuence.advancement.puzzle_4": "Death Puzzle",
+  "imbuence.advancement.puzzle_5": "All Five Special Cards",
+  "imbuence.advancement.puzzle_6": "Six-League Armor",
   "imbuence.advancement.root.desc": "An extra touch of magic on your adventure.",
   "imbuence.advancement.daybreak.desc": "Stage a reunion full of scars.",
-  "imbuence.advancement.turtle.desc": "Get at least something useful out of the curse."
+  "imbuence.advancement.turtle.desc": "Get at least something useful out of the curse.",
+  "imbuence.advancement.puzzle_1.desc": "Have 1 piece of equipment enchanted with Puzzle. Effect: Reduces experience levels consumed when enchanting or anvilling.",
+  "imbuence.advancement.puzzle_2.desc": "Have 2 pieces of equipment enchanted with Puzzle. Effect: Reduces animal breeding cooldown and villager conversion duration.",
+  "imbuence.advancement.puzzle_3.desc": "Have 3 pieces of equipment enchanted with Puzzle. Effect: Grants Luck 3.",
+  "imbuence.advancement.puzzle_4.desc": "Have 4 pieces of equipment enchanted with Puzzle. Effect: Makes faraway attackers slow and glow.",
+  "imbuence.advancement.puzzle_5.desc": "Have 5 pieces of equipment enchanted with Puzzle. Effect: Drinking potion doubles duration of positive and neutral effects. Movement exhausts hunger slower while under 5 or more status effects.",
+  "imbuence.advancement.puzzle_6.desc": "Have 6 pieces of equipment enchanted with Puzzle. Effect: Reduces damage taken from those with more maximum health than you."
 }

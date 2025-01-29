@@ -1,6 +1,5 @@
 package io.github.raverbury.imbuence.effect;
 
-import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -26,7 +25,7 @@ public class SanctaPotentiaEffect extends MobEffect {
     }
 
     @SubscribeEvent
-    public static void onArrowHurtEvent(LivingDamageEvent event) {
+    public static void onArrowHurtEvent(LivingHurtEvent event) {
         if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
@@ -53,7 +52,6 @@ public class SanctaPotentiaEffect extends MobEffect {
         if (HAS_FORBIDDEN_SYZYGY) {
             event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, false, true));
         }
-//        Imbuence.LOGGER.debug("sacred corona procs");
         event.setAmount(event.getAmount() + BONUS_FLAT_DAMAGE);
     }
 
@@ -79,7 +77,6 @@ public class SanctaPotentiaEffect extends MobEffect {
         if (damage > 4 || !evenDamage) {
             return;
         }
-//        Imbuence.LOGGER.debug("sacred corona prevents " + damage + " damage at " + roundedX + ":Y:" + roundedZ);
         event.setCanceled(true);
     }
 

@@ -1,0 +1,28 @@
+{
+  "parent": "imbuence:main/puzzle_4",
+  "criteria": {
+    "equipments_with_puzzle": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "imbuence.advancement.puzzle_5.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:glass_bottle"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "imbuence.advancement.puzzle_5"
+    }
+  },
+  "requirements": [
+    [
+      "equipments_with_puzzle"
+    ]
+  ]
+}
