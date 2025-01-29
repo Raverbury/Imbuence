@@ -1,8 +1,9 @@
 package io.github.raverbury.imbuence.util;
 
+import io.github.raverbury.imbuence.Config;
+
 public final class MathUtil {
     private static final int MAX_VANILLA_COST = 30;
-    private static final int MAX_MODDED_COST = 199;
     private static final int UNACHIEVABLE_COST = 100000;
 
     public static int getModdedAwareMinCost(int levelOneCost,
@@ -12,7 +13,7 @@ public final class MathUtil {
         return getModdedAwareMinCost(levelOneCost, currentLevel,
                 maxVanillaLevel,
                 maxModdedLevel,
-                MAX_MODDED_COST);
+                Config.OVERCAP_MAX_COST.get());
     }
 
     public static int getModdedAwareMinCost(int levelOneCost,

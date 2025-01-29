@@ -32,9 +32,9 @@ public class Config {
 
         FORTRESS_SCALES_WORSE_AS_MAX_HEALTH_INCREASE = CONFIG_BUILDER
                 .comment("""
-                        Control whether Fortress scales less effectively as\
-                        max health increases. Remember that Fortress applies\
-                        to every instance of damage dealt, not just melee, and it's not a lot worse.\
+                        Control whether Fortress scales less effectively as \
+                        max health increases. Remember that Fortress applies \
+                        to every instance of damage dealt, not just melee, and it's not a lot worse. \
                         When off, it is just maxHP * fortress_max_health_ratio_growth * level.
                         When on, it is (maxHP + 20)/1.3 * fortress_max_health_ratio_growth * level, \
                         or better at base vanilla health but scales a bit slower (still linear and infinite).\
