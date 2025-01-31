@@ -74,19 +74,24 @@ public class PuzzleEnchantment extends Enchantment {
     }
 
     @SubscribeEvent
-    public static void livingAttackedHandler(LivingAttackEvent e) {
+    public static void puzzle4Handler(LivingAttackEvent e) {
         if (e.getEntity().level().isClientSide()) {
             return;
         }
         if (getSlotsWithPuzzleEnchantmentCount(e.getEntity()) == 4) {
             if (e.getSource()
                     .getEntity() instanceof LivingEntity livingEntity) {
-                if (livingEntity.distanceToSqr(e.getEntity()) >= 64) {
+                if (livingEntity.distanceToSqr(e.getEntity()) >= 16) {
                     livingEntity.addEffect(
-                            new MobEffectInstance(MobEffects.GLOWING, 120, 0));
+                            new MobEffectInstance(MobEffects.GLOWING, 80, 0));
                     livingEntity.addEffect(
                             new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
-                                    60, 4));
+                                    80, 3));
+                    livingEntity.addEffect(
+                            new MobEffectInstance(
+                                    ModRegistries.JUDGEMENT_EFFECT.get(), 80,
+                                    3)
+                    );
                 }
             }
         }

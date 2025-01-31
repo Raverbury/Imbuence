@@ -9,8 +9,7 @@ public class Config {
     public static final ForgeConfigSpec.BooleanValue FORTRESS_SCALES_WORSE_AS_MAX_HEALTH_INCREASE;
     public static final ForgeConfigSpec.DoubleValue COMMANDER_BONUS_DAMAGE_PER_PET;
     public static final ForgeConfigSpec.DoubleValue COMMANDER_MAX_BONUS_DAMAGE;
-    public static final ForgeConfigSpec.DoubleValue PUNISHMENT_BONUS_DAMAGE_PER_LEVEL;
-    public static final ForgeConfigSpec.DoubleValue PUNISHMENT_MAX_BONUS_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue CRIME_PUNISHMENT_BONUS_DAMAGE_PER_LEVEL;
     public static final ForgeConfigSpec.DoubleValue PET_QUERY_RANGE;
     private static final ForgeConfigSpec.Builder CONFIG_BUILDER =
             new ForgeConfigSpec.Builder();
@@ -26,7 +25,8 @@ public class Config {
                 .defineInRange("overcap_max_cost", 199, 31, 1000);
 
         FORTRESS_MAX_HEALTH_RATIO_GROWTH = CONFIG_BUILDER
-                .comment("Max health ratio per level in decimal form")
+                .comment("Fortress's max health ratio per level in decimal " +
+                        "form")
                 .defineInRange("fortress_max_health_ratio_per_level", 0.01, 0,
                         0.1);
 
@@ -37,30 +37,27 @@ public class Config {
                         to every instance of damage dealt, not just melee, and it's not a lot worse. \
                         When off, it is just maxHP * fortress_max_health_ratio_growth * level.
                         When on, it is (maxHP + 20)/1.3 * fortress_max_health_ratio_growth * level, \
-                        or better at base vanilla health but scales a bit slower (still linear and infinite).\
+                        or better at base vanilla health but scales a bit slower (still linear and infinite)\
                         """)
                 .define("fortress_scales_worse", true);
 
         COMMANDER_BONUS_DAMAGE_PER_PET = CONFIG_BUILDER
-                .comment("Each pet provides this much attack damage")
+                .comment("Each pet provides this much attack damage with " +
+                        "Commander enchantment")
                 .defineInRange("commander_bonus_damage_per_pet", 0.5, 0.0, 5.0);
 
         COMMANDER_MAX_BONUS_DAMAGE = CONFIG_BUILDER
-                .comment("The max bonus damage provided by Commander")
+                .comment("The max bonus damage provided by Commander, to " +
+                        "discourage having too many pets causing entity lag")
                 .defineInRange("commander_max_bonus_damage", 5.0, 0.0, 20.0);
 
-        PUNISHMENT_BONUS_DAMAGE_PER_LEVEL = CONFIG_BUILDER
-                .comment("Punishment deals this much damage per level " +
-                        "(remember that level here is the min between " +
-                        "Crime " +
-                        "and Punishment)")
-                .defineInRange("punishment_bonus_damage_per_level", 0.75,
-                        0.25, 5.0);
-
-        PUNISHMENT_MAX_BONUS_DAMAGE = CONFIG_BUILDER
-                .comment("The max damage dealt by Punishment")
-                .defineInRange("punishment_max_bonus_damage", 10.0,
-                        3.0, 25.0);
+        CRIME_PUNISHMENT_BONUS_DAMAGE_PER_LEVEL = CONFIG_BUILDER
+                .comment("Crime and Punishment deals this much damage per " +
+                        "level. Half of this is given based on their combined" +
+                        "levels, and half is given based on their min level " +
+                        "to retain some of the original \"balance\" theme")
+                .defineInRange("crime_punishment_bonus_damage_per_level", 1,
+                        0.1, 10.0);
 
         PET_QUERY_RANGE = CONFIG_BUILDER
                 .comment("The range to check for nearby pets")

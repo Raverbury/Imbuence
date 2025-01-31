@@ -46,10 +46,10 @@ public class PunishmentEnchantment extends ModdedAwareEnchantment {
                         livingEntity.getEffect(ModRegistries.JUDGEMENT_EFFECT.get()))
                 .getAmplifier() + 1;
         int minSyncLevel = Math.min(judgementLevel, punishmentLevel);
+        double halfBonusDamagePerLevel =
+                Config.CRIME_PUNISHMENT_BONUS_DAMAGE_PER_LEVEL.get() * 0.5;
         float bonusDamage =
-                (float) (Math.min(
-                                        Config.PUNISHMENT_BONUS_DAMAGE_PER_LEVEL.get() * minSyncLevel,
-                                        Config.PUNISHMENT_MAX_BONUS_DAMAGE.get()) * event.attackStrengthScale);
+                (float) (halfBonusDamagePerLevel * ((judgementLevel + punishmentLevel) * 0.5f + minSyncLevel)) * event.attackStrengthScale;
         event.customBonusDamage += bonusDamage;
     }
 
