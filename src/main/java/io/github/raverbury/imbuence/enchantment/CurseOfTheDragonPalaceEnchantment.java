@@ -42,12 +42,15 @@ public class CurseOfTheDragonPalaceEnchantment extends Enchantment {
                     ModRegistries.CURSE_OF_THE_DRAGON_PALACE_ENCHANTMENT.get()) > 0) {
                 e.player.awardStat(Stats.TIME_SINCE_REST);
                 e.player.awardStat(Stats.TIME_SINCE_REST);
-            }
-            if (helmetIS.is(Items.TURTLE_HELMET)) {
-                helmetIS.setDamageValue(helmetIS.getDamageValue() - 1);
-                e.player.addEffect(new MobEffectInstance(
-                        MobEffects.WATER_BREATHING, 219, 0, true, true
-                ));
+
+                if (helmetIS.is(Items.TURTLE_HELMET)) {
+                    if (e.player.level().getGameTime() % 50 == 0) {
+                        helmetIS.setDamageValue(helmetIS.getDamageValue() - 5);
+                    }
+                    e.player.addEffect(new MobEffectInstance(
+                            MobEffects.WATER_BREATHING, 219, 0, true, true
+                    ));
+                }
             }
         }
     }
