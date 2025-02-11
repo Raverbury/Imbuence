@@ -33,7 +33,7 @@ public class CommanderEnchantment extends UniqueHelmetEnchantment {
 
     @SubscribeEvent
     public static void playerTickHandler(TickEvent.PlayerTickEvent e) {
-        if (e.side.isClient() || e.phase != TickEvent.Phase.START) {
+        if (e.side.isClient() || e.phase != TickEvent.Phase.START || e.player.level().getGameTime() % 20 != 0) {
             return;
         }
 
