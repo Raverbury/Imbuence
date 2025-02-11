@@ -30,7 +30,7 @@ public class CurseOfTheDragonPalaceEnchantment extends Enchantment {
 
     @SubscribeEvent
     public static void playerTickHandler(TickEvent.PlayerTickEvent e) {
-        if (e.side.isClient()) {
+        if (e.side.isClient() || e.phase != TickEvent.Phase.START) {
             return;
         }
         ItemStack helmetIS = e.player.getItemBySlot(EquipmentSlot.HEAD);

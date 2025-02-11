@@ -61,15 +61,13 @@ public class PuzzleEnchantment extends Enchantment {
 
     @SubscribeEvent
     public static void playerTickHandler(TickEvent.PlayerTickEvent e) {
-        if (e.player.level().isClientSide()) {
+        if (e.side.isClient() || e.phase != TickEvent.Phase.START) {
             return;
         }
         if (getSlotsWithPuzzleEnchantmentCount(e.player) == 3) {
-            if (!e.player.hasEffect(MobEffects.LUCK)) {
-                e.player.addEffect(
-                        new MobEffectInstance(MobEffects.LUCK, 119, 2, true,
-                                true));
-            }
+            e.player.addEffect(
+                    new MobEffectInstance(MobEffects.LUCK, 119, 2, true,
+                            true));
         }
     }
 
