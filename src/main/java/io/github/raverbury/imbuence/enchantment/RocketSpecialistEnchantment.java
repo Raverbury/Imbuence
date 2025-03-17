@@ -18,9 +18,6 @@ public class RocketSpecialistEnchantment extends ModdedAwareEnchantment {
 
     public static final String ID = "rocket_specialist";
 
-    public static final float BONUS_DAMAGE_MULTIPLIER_GROWTH = 0.25f;
-    public static final float INCREASED_SPLASH_RADIUS_GROWTH = 0.15f;
-
     public static final String NBT_TAG_KEY = "RocketSpecialist";
 
     public RocketSpecialistEnchantment() {

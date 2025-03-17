@@ -1,5 +1,6 @@
 package io.github.raverbury.imbuence.effect;
 
+import io.github.raverbury.imbuence.Config;
 import io.github.raverbury.imbuence.ModRegistries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -17,8 +18,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class SanctaPotentiaEffect extends MobEffect {
-
-    public static final int BONUS_FLAT_DAMAGE = 6;
 
     public SanctaPotentiaEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xEAC925);
@@ -50,9 +49,12 @@ public class SanctaPotentiaEffect extends MobEffect {
             return;
         }
         if (HAS_FORBIDDEN_SYZYGY) {
-            event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, false, true));
+            if (Config.FORBIDDEN_SYZYGY_APPLIES_GLOWING.get()) {
+                event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, false, true));
+            }
         }
-        event.setAmount(event.getAmount() + BONUS_FLAT_DAMAGE);
+        event.setAmount(
+                (float) (event.getAmount() + Config.SANCTA_POTENTIA_BONUS_FLAT_DAMAGE.get()));
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

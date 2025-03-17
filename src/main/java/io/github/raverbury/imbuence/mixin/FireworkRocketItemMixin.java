@@ -3,13 +3,20 @@ package io.github.raverbury.imbuence.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import io.github.raverbury.imbuence.ModRegistries;
+import io.github.raverbury.imbuence.compat.curios.CuriosCompat;
 import io.github.raverbury.imbuence.enchantment.AfterburnerEnchantment;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.FireworkRocketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -27,8 +34,15 @@ public class FireworkRocketItemMixin {
         ItemStack tmp = p_37059_.copy();
         int afterburnerLevel = EnchantmentHelper.getEnchantmentLevel(
                 ModRegistries.AFTERBURNER_ENCHANTMENT.get(), p_37060_);
+        if (ModList.get().isLoaded("curios")) {
+            if (p_37060_ instanceof Player) {
+                afterburnerLevel = Math.max(afterburnerLevel,
+                        CuriosCompat.getAfterburneronCurios((Player) p_37060_));
+            }
+        }
         int minFlightDuration =
-                AfterburnerEnchantment.getMininumFlightDuration(afterburnerLevel);
+                AfterburnerEnchantment.getMininumFlightDuration(
+                        afterburnerLevel);
         int initialFlightDuration =
                 p_37059_.getOrCreateTagElement("Fireworks").getByte("Flight");
         FireworkRocketItem.setDuration(tmp,

@@ -1,5 +1,6 @@
 package io.github.raverbury.imbuence.effect;
 
+import io.github.raverbury.imbuence.Config;
 import io.github.raverbury.imbuence.ModRegistries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -17,8 +18,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class MarePotentiaEffect extends MobEffect {
-
-    private static final float PERCENT_BONUS_DAMAGE = 70;
 
     public MarePotentiaEffect() {
         super(MobEffectCategory.BENEFICIAL, 0x1F8AC4);
@@ -52,7 +51,8 @@ public class MarePotentiaEffect extends MobEffect {
         if (HAS_FORBIDDEN_SYZYGY) {
             event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, false, true));
         }
-        event.setAmount(event.getAmount() * (1 + (PERCENT_BONUS_DAMAGE / 100)));
+        event.setAmount(
+                (float) (event.getAmount() * (1 + Config.MARE_POTENTIA_BONUS_PERCENT_DAMAGE.get())));
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

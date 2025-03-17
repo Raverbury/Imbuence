@@ -1,5 +1,6 @@
 package io.github.raverbury.imbuence.enchantment;
 
+import io.github.raverbury.imbuence.Config;
 import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import io.github.raverbury.imbuence.accessors.MobEffectInstanceAccessor;
@@ -80,8 +81,11 @@ public class PuzzleEnchantment extends Enchantment {
             if (e.getSource()
                     .getEntity() instanceof LivingEntity livingEntity) {
                 if (livingEntity.distanceToSqr(e.getEntity()) >= 16) {
-                    livingEntity.addEffect(
-                            new MobEffectInstance(MobEffects.GLOWING, 80, 0));
+                    if (Config.PUZZLE_4_APPLIES_GLOWING.get()) {
+                        livingEntity.addEffect(
+                                new MobEffectInstance(MobEffects.GLOWING, 80,
+                                        0));
+                    }
                     livingEntity.addEffect(
                             new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
                                     80, 3));
@@ -128,9 +132,11 @@ public class PuzzleEnchantment extends Enchantment {
                     .getEntity() instanceof LivingEntity livingEntity) {
                 if (livingEntity.getMaxHealth() > e.getEntity()
                         .getMaxHealth()) {
-                    float damageReductionFactor = Math.min(0.5f,
-                            livingEntity.getMaxHealth() / e.getEntity()
-                                    .getMaxHealth() * 0.01f);
+                    float damageReductionFactor =
+                            (float) Math.min(
+                                    Config.PUZZLE_6_DAMAGE_REDUCTION_CAP.get(),
+                                    livingEntity.getMaxHealth() / e.getEntity()
+                                            .getMaxHealth() * Config.PUZZLE_6_DAMAGE_REDUCTION.get());
                     e.setAmount(
                             e.getAmount() * (1 - damageReductionFactor));
                 }

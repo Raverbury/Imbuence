@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import io.github.raverbury.imbuence.Config;
 import io.github.raverbury.imbuence.enchantment.RocketSpecialistEnchantment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,7 +31,7 @@ public class FireworkRocketEntityMixin {
                         compoundTag);
 
         return original.call(instance, entity,
-                ev * (1 + rocketSpecialistLevel * RocketSpecialistEnchantment.BONUS_DAMAGE_MULTIPLIER_GROWTH));
+                (float) (ev * (1 + rocketSpecialistLevel * Config.ROCKET_SPECIALIST_BONUS_DAMAGE_PER_LEVEL.get())));
     }
 
     @WrapOperation(
@@ -46,7 +47,7 @@ public class FireworkRocketEntityMixin {
                         compoundTag), 4);
 
         return original.call(instance,
-                radius * (1 + rocketSpecialistLevel * RocketSpecialistEnchantment.INCREASED_SPLASH_RADIUS_GROWTH));
+                radius * (1 + rocketSpecialistLevel * Config.ROCKET_SPECIALIST_BONUS_RADIUS_PER_LEVEL.get()));
     }
 
     /**
@@ -70,7 +71,7 @@ public class FireworkRocketEntityMixin {
                 RocketSpecialistEnchantment.getRocketSpecialistLevelFromTag(
                         compoundTag), 4);
 
-        return radius * (1 + rocketSpecialistLevel * RocketSpecialistEnchantment.INCREASED_SPLASH_RADIUS_GROWTH);
+        return radius * (1 + rocketSpecialistLevel * Config.ROCKET_SPECIALIST_BONUS_RADIUS_PER_LEVEL.get());
     }
 
     @ModifyExpressionValue(
