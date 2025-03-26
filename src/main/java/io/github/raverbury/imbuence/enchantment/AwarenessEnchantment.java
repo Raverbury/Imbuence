@@ -3,7 +3,6 @@ package io.github.raverbury.imbuence.enchantment;
 import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import io.github.raverbury.imbuence.enchantment.base.UniqueChestplateEnchantment;
-import io.github.raverbury.imbuence.util.MathUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -58,7 +57,7 @@ public class AwarenessEnchantment extends UniqueChestplateEnchantment {
         nbt.putLong(NBT_KEY, nextCdFinishTick);
         entity.level()
                 .playSound(null, entity.getX(), entity.getY(), entity.getZ(),
-                        SoundEvents.SHIELD_BLOCK, entity.getSoundSource(), 1F,
+                        SoundEvents.SHIELD_BLOCK, entity.getSoundSource(), 0.2f,
                         1F);
         //        Imbuence.LOGGER.debug("Attack blocked, " + currentTick + " -> " + nextCdFinishTick);
     }

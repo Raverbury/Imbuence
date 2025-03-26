@@ -26,8 +26,8 @@ public class PreparationEnchantment extends UniqueChestplateEnchantment {
     private static final int BASE_COOLDOWN = 20;
     private static final int BASE_DURATION = 0;
     private static final int DURATION_GROWTH = 1;
-    private static final int COOLDOWN_REDUCTION_GROWTH = 2;
-    private static final int MIN_COOLDOWN = 8;
+    private static final int COOLDOWN_REDUCTION_GROWTH = 3;
+    private static final int MIN_COOLDOWN = 4;
 
     private static final String NBT_KEY = Imbuence.MODID + "." + ID + "." + "last_combat_event";
 

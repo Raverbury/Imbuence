@@ -53,24 +53,25 @@ public class Config {
         COMMANDER_BONUS_DAMAGE_PER_PET = CONFIG_BUILDER
                 .comment("Each pet provides this much attack damage with " +
                         "Commander enchantment.")
-                .defineInRange("commander_bonus_damage_per_pet", 0.5, 0.0, 5.0);
+                .defineInRange("commander_bonus_damage_per_pet", 0.5, 0.0,
+                        Double.MAX_VALUE);
 
         COMMANDER_MAX_BONUS_DAMAGE = CONFIG_BUILDER
                 .comment("The max bonus damage provided by Commander, to " +
                         "discourage having too many pets causing entity lag.")
-                .defineInRange("commander_max_bonus_damage", 5.0, 0.0, 20.0);
+                .defineInRange("commander_max_bonus_damage", 5.0, 0.0, Double.MAX_VALUE);
 
         CRIME_PUNISHMENT_BONUS_DAMAGE_PER_LEVEL = CONFIG_BUILDER
                 .comment("Crime and Punishment deals this much damage per " +
                         "level. Half of this is given based on their combined" +
                         "levels, and half is given based on their min level " +
                         "to retain some of the original \"balance\" theme.")
-                .defineInRange("crime_punishment_bonus_damage_per_level", 1,
-                        0.1, 10.0);
+                .defineInRange("crime_punishment_bonus_damage_per_level", 2,
+                        0.0, Double.MAX_VALUE);
 
         PET_QUERY_RANGE = CONFIG_BUILDER
                 .comment("The range to check for nearby pets.")
-                .defineInRange("pet_query_range", 12.0, 1.0, 16.0);
+                .defineInRange("pet_query_range", 12.0, 1.0, 64.0);
 
         FORBIDDEN_SYZYGY_APPLIES_GLOWING = CONFIG_BUILDER
                 .comment("Controls whether Forbiden Syzygy applies Glowing to" +
@@ -98,7 +99,7 @@ public class Config {
                         "percentage increased damage, in decimal form.")
                 .defineInRange("rocket_specialist_bonus_damage_per_level",
                         0.25d, 0d,
-                        100d);
+                        Double.MAX_VALUE);
 
         ROCKET_SPECIALIST_BONUS_RADIUS_PER_LEVEL = CONFIG_BUILDER
                 .comment("Firework rockets shot with Rocket Specialist have " +
@@ -112,13 +113,13 @@ public class Config {
                 .comment("Sancta Potentia causes arrows to deal this much " +
                         "extra flat damage.")
                 .defineInRange("sancta_potentia_bonus_flat_damage",
-                        6d, 0d, 100d);
+                        6d, 0d, Double.MAX_VALUE);
 
         MARE_POTENTIA_BONUS_PERCENT_DAMAGE = CONFIG_BUILDER
                 .comment("Mare Potentia causes arrows to deal this much " +
                         "extra percentage damage, in decimal form.")
                 .defineInRange("mare_potentia_bonus_percent_damage",
-                        0.7d, 0d, 5d);
+                        0.7d, 0d, Double.MAX_VALUE);
 
         COMMON_CONFIG = CONFIG_BUILDER.build();
     }

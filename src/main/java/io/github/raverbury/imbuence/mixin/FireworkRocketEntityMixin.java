@@ -5,17 +5,51 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import io.github.raverbury.imbuence.Config;
+import io.github.raverbury.imbuence.enchantment.AfterburnerEnchantment;
 import io.github.raverbury.imbuence.enchantment.RocketSpecialistEnchantment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.item.FireworkRocketItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(FireworkRocketEntity.class)
 public class FireworkRocketEntityMixin {
+
+    /**
+     * This is the ctor used to attach rockets to boost elytra, we increase
+     * flight duration here
+     */
+    @ModifyArg(
+            method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/projectile/FireworkRocketEntity;<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;DDDLnet/minecraft/world/item/ItemStack;)V"
+            ),
+            index = 5
+    )
+    private static ItemStack imbuence$setAfterburnerMinFlightDuration(
+            ItemStack itemStack,
+            @Local(argsOnly = true) LivingEntity livingEntity
+            )
+    {
+        int afterburnerLevel =
+                AfterburnerEnchantment.getEnchantLevel(livingEntity);
+        int minFlightDuration =
+                AfterburnerEnchantment.getMininumFlightDuration(afterburnerLevel);
+        int initialFlightDuration =
+                itemStack.getOrCreateTagElement("Fireworks").getByte("Flight");
+        ItemStack fakeItemStack = itemStack.copy();
+        FireworkRocketItem.setDuration(fakeItemStack,
+                (byte) Math.max(initialFlightDuration,
+                        minFlightDuration));
+        return fakeItemStack;
+    }
 
     @WrapOperation(
             method = "dealExplosionDamage",
@@ -47,7 +81,8 @@ public class FireworkRocketEntityMixin {
                         compoundTag), 4);
 
         return original.call(instance,
-                radius * (1 + rocketSpecialistLevel * Config.ROCKET_SPECIALIST_BONUS_RADIUS_PER_LEVEL.get()));
+                Math.min(RocketSpecialistEnchantment.MAX_RADIUS,
+                        radius * (1 + rocketSpecialistLevel * Config.ROCKET_SPECIALIST_BONUS_RADIUS_PER_LEVEL.get())));
     }
 
     /**
@@ -71,7 +106,8 @@ public class FireworkRocketEntityMixin {
                 RocketSpecialistEnchantment.getRocketSpecialistLevelFromTag(
                         compoundTag), 4);
 
-        return radius * (1 + rocketSpecialistLevel * Config.ROCKET_SPECIALIST_BONUS_RADIUS_PER_LEVEL.get());
+        return Math.min(RocketSpecialistEnchantment.MAX_RADIUS,
+                radius * (1 + rocketSpecialistLevel * Config.ROCKET_SPECIALIST_BONUS_RADIUS_PER_LEVEL.get()));
     }
 
     @ModifyExpressionValue(

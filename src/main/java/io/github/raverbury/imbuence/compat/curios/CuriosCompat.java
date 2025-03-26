@@ -11,7 +11,7 @@ import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import java.util.Optional;
 
 public class CuriosCompat {
-    public static int getAfterburneronCurios(Player player) {
+    public static int getAfterburnerOnCurios(Player player) {
 
         String[] slotsToCheck = new String[] {"back", "body", "elytra"};
 
@@ -33,6 +33,8 @@ public class CuriosCompat {
                         int level =
                                 itemStack.getEnchantmentLevel(ModRegistries.AFTERBURNER_ENCHANTMENT.get());
                         if (level > maxLevel[0]) {
+                            // Imbuence.LOGGER.info("Afterburner level {} on {}"
+                            //         , level, slot);
                             maxLevel[0] = level;
                         }
                     }

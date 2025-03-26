@@ -36,6 +36,9 @@ public class ShadowWalkerEnchantment extends ModdedAwareEnchantment {
         if (event.isCanceled() || event.getEntity() == null || event.getEntity().level().isClientSide()) {
             return;
         }
+        if (event.getEntity().level().getGameTime() % 10 != 0) {
+            return;
+        }
         LivingEntity entity = event.getEntity();
         int shadowWalkerLevel = EnchantmentHelper.getEnchantmentLevel(ModRegistries.SHADOW_WALKER_ENCHANTMENT.get(), entity);
         if (shadowWalkerLevel <= 0)
@@ -48,7 +51,7 @@ public class ShadowWalkerEnchantment extends ModdedAwareEnchantment {
         // To prevent mods that raise level limit of enchantments from making this permanently active
         int internalLightLevelThreshold = Math.min(MIN_INTERNAL_LIGHT_LEVEL_THRESHOLD + INTERNAL_LIGHT_LEVEL_THRESHOLD_GROWTH * shadowWalkerLevel, MAX_INTERNAL_LIGHT_LEVEL_THRESHOLD);
         int strengthLevel = shadowWalkerLevel > 1? 1 : 0;
-        if (internalLightLevel <= internalLightLevelThreshold && !entity.hasEffect(MobEffects.DAMAGE_BOOST)) {
+        if (internalLightLevel <= internalLightLevelThreshold) {
             entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 4 * 20, strengthLevel, true, false, true));
             if (shadowWalkerLevel > 1) {
                 entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 4 * 20, 0, true, false, true));

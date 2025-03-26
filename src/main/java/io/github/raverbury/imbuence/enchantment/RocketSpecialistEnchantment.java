@@ -20,6 +20,8 @@ public class RocketSpecialistEnchantment extends ModdedAwareEnchantment {
 
     public static final String NBT_TAG_KEY = "RocketSpecialist";
 
+    public static final float MAX_RADIUS = 12f;
+
     public RocketSpecialistEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentCategory.CROSSBOW,
                 new EquipmentSlot[]{
@@ -76,6 +78,10 @@ public class RocketSpecialistEnchantment extends ModdedAwareEnchantment {
                 itemStack) && (itemStack.getItem() instanceof CrossbowItem);
     }
 
+    /**
+     * This is to refuse arrows
+     * @param e
+     */
     @SubscribeEvent
     public static void livingGetProjectileHandler(LivingGetProjectileEvent e) {
         if (!(e.getProjectileWeaponItemStack()
