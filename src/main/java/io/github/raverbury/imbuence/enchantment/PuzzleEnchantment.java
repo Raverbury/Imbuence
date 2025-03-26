@@ -3,7 +3,6 @@ package io.github.raverbury.imbuence.enchantment;
 import io.github.raverbury.imbuence.Config;
 import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
-import io.github.raverbury.imbuence.accessors.MobEffectInstanceAccessor;
 import io.github.raverbury.imbuence.events.PotionDrinkAndApplyEffectEvent;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +19,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
@@ -111,15 +111,29 @@ public class PuzzleEnchantment extends Enchantment {
             return;
         }
 
-        e.mobEffectInstance =
-                new MobEffectInstance(e.mobEffectInstance.getEffect(),
-                        e.mobEffectInstance.getDuration() * 2,
-                        e.mobEffectInstance.getAmplifier(),
-                        e.mobEffectInstance.isAmbient(),
-                        e.mobEffectInstance.isVisible(),
-                        e.mobEffectInstance.showIcon(),
-                        ((MobEffectInstanceAccessor) e.mobEffectInstance).imbuence$getHiddenMobEffectInstance(),
-                        e.mobEffectInstance.getFactorData());
+        e.mobEffectInstance.update(
+                new MobEffectInstance(
+                        e.mobEffectInstance.getEffect(),
+                        (int) ((float) e.mobEffectInstance.getDuration() * 1.5f),
+                        e.mobEffectInstance.getAmplifier()
+                )
+        );
+    }
+
+    @SubscribeEvent
+    public static void puzzle5ModifyEffectDuration(MobEffectEvent.Added event) {
+        MobEffectInstance newMobEffectInstance = event.getEffectInstance();
+        float durationModifier =
+                newMobEffectInstance.getEffect()
+                        .getCategory() == MobEffectCategory.HARMFUL ?
+                        0.5f : 2f;
+        newMobEffectInstance.update(
+                new MobEffectInstance(
+                        newMobEffectInstance.getEffect(),
+                        (int) ((float) newMobEffectInstance.getDuration() * durationModifier),
+                        newMobEffectInstance.getAmplifier()
+                )
+        );
     }
 
     @SubscribeEvent

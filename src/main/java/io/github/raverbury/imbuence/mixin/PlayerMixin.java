@@ -82,7 +82,7 @@ public abstract class PlayerMixin {
             original.call(instance, p_36400_);
             return;
         }
-        original.call(instance, p_36400_ * 0.5f);
+        original.call(instance, p_36400_ * 0.2f);
     }
 
     @WrapOperation(
@@ -103,7 +103,7 @@ public abstract class PlayerMixin {
             original.call(instance, p_36400_);
             return;
         }
-        original.call(instance, p_36400_ * 0.5f);
+        original.call(instance, p_36400_ * 0.2f);
     }
 
     @WrapOperation(
