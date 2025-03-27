@@ -44,16 +44,6 @@ public class AfterburnerEnchantment extends ModdedAwareEnchantment {
     }
 
     @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
-    @Override
-    public boolean isDiscoverable() {
-        return false;
-    }
-
-    @Override
     public int getLevelOneCost() {
         return 22;
     }
