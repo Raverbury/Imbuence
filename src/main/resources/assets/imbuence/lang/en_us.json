@@ -33,7 +33,7 @@
   "enchantment.imbuence.puzzle.desc": "Provides different effects depending on the number of armor pieces and hand items that have this enchantment.",
   "enchantment.imbuence.curse_of_the_dragon_palace.desc": "While underwater, time since last rest accumulates faster. May interact with certain items in special ways...",
   "enchantment.imbuence.wolf_pack.desc": "Grants nearby pets buffs depending on the number of surrounding pets. A wolf counts as 2 pets.",
-  "enchantment.imbuence.commander.desc": "Grants bonus attack damage for every nearby pet. A wolf counts as 2 pets.",
+  "enchantment.imbuence.commander.desc": "Grants bonus attack damage for every nearby pet, up to a cap. A wolf counts as 2 pets.",
 
   "effect.imbuence.judgement": "Judgement",
   "effect.imbuence.sancta_potentia": "Sancta Potentia",

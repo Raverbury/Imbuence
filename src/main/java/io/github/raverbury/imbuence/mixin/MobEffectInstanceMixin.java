@@ -11,8 +11,15 @@ public class MobEffectInstanceMixin implements MobEffectInstanceAccessor {
     @Shadow
     private MobEffectInstance hiddenEffect;
 
+    @Shadow private int duration;
+
     @Override
     public MobEffectInstance imbuence$getHiddenMobEffectInstance() {
         return this.hiddenEffect;
+    }
+
+    @Override
+    public void imbuence$setDuration(int newDuration) {
+        this.duration = newDuration;
     }
 }

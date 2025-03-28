@@ -1,6 +1,11 @@
 package io.github.raverbury.imbuence;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Config {
     public static final ForgeConfigSpec COMMON_CONFIG;
@@ -19,6 +24,11 @@ public class Config {
     public static final ForgeConfigSpec.DoubleValue ROCKET_SPECIALIST_BONUS_RADIUS_PER_LEVEL;
     public static final ForgeConfigSpec.DoubleValue SANCTA_POTENTIA_BONUS_FLAT_DAMAGE;
     public static final ForgeConfigSpec.DoubleValue MARE_POTENTIA_BONUS_PERCENT_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue PUZZLE_5_EFFECT_DURATION_EXTENSION;
+    public static final ForgeConfigSpec.DoubleValue PUZZLE_5_EFFECT_DURATION_EXTENSION_POTION;
+    public static final ForgeConfigSpec.DoubleValue PUZZLE_5_EFFECT_DURATION_REDUCTION;
+
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> PUZZLE_5_EFFECT_BLACKLIST;
 
     private static final ForgeConfigSpec.Builder CONFIG_BUILDER =
             new ForgeConfigSpec.Builder();
@@ -27,49 +37,47 @@ public class Config {
         CONFIG_BUILDER.push("Number tweaks");
         OVERCAP_MAX_COST = CONFIG_BUILDER
                 .comment("""
-                        When enchantment levels are uncapped by other mods, \
-                        what is the maximum enchantment cost that should be \
-                        used to scale this mod's overcapped levels. \
+                        When enchantment levels are uncapped by other mods,
+                        what is the maximum enchantment cost that should be
+                        used to scale this mod's overcapped levels.
                         An example is Apotheosis with their default max cost of 200.
-                        This is to allow controlled overcap as opposed to uncontrolled.
-                        """)
+                        This is to allow controlled overcap as opposed to uncontrolled.""")
                 .defineInRange("overcap_max_cost", 199, 31, 1000);
 
         FORTRESS_MAX_HEALTH_RATIO_GROWTH = CONFIG_BUILDER
-                .comment("Fortress's max health ratio per level in decimal " +
-                        "form.")
+                .comment("""
+                        Fortress's max health ratio per level in decimal form.""")
                 .defineInRange("fortress_max_health_ratio_per_level", 0.01, 0,
                         0.1);
 
         FORTRESS_SCALES_WORSE_AS_MAX_HEALTH_INCREASE = CONFIG_BUILDER
                 .comment("""
-                        Control whether Fortress scales less effectively as \
-                        max health increases.
-                        Remember that Fortress applies to every instance of damage dealt, \
+                        Control whether Fortress scales less effectively as max health increases.
+                        Remember that Fortress applies to every instance of damage dealt,
                         not just melee.
-                        When off, it is just maxHP * fortress_max_health_ratio_growth * level.
-                        When on, it is (maxHP + 20)/1.3 * fortress_max_health_ratio_growth * level, \
-                        or better at base vanilla health but scales a bit slower (still linear and infinite).\
-                        """)
+                        When off, it is maxHP * fortress_max_health_ratio_growth * level.
+                        When on, it is (maxHP + 20)/1.3 * fortress_max_health_ratio_growth * level,
+                        or better at base vanilla health but scales a bit slower (still linear and infinite).""")
                 .define("fortress_scales_worse", true);
 
         COMMANDER_BONUS_DAMAGE_PER_PET = CONFIG_BUILDER
-                .comment("Each pet provides this much attack damage with " +
-                        "Commander enchantment.")
+                .comment("""
+                        Each pet provides this much attack damage with Commander enchantment.
+                        Note that is an attribute modifier.""")
                 .defineInRange("commander_bonus_damage_per_pet", 0.5, 0.0,
                         Double.MAX_VALUE);
 
         COMMANDER_MAX_BONUS_DAMAGE = CONFIG_BUILDER
-                .comment("The max bonus damage provided by Commander, to " +
-                        "discourage having too many pets causing entity lag.")
+                .comment("""
+                        The max bonus damage provided by Commander,
+                        to discourage having too many pets causing entity lag.""")
                 .defineInRange("commander_max_bonus_damage", 5.0, 0.0, Double.MAX_VALUE);
 
         CRIME_PUNISHMENT_BONUS_DAMAGE_PER_LEVEL = CONFIG_BUILDER
                 .comment("""
                         Crime and Punishment deals this much damage per level.
                         Half of this is given based on their combined levels
-                        and half is given based on their min level.
-                        """)
+                        and half is given based on their min level.""")
                 .defineInRange("crime_punishment_bonus_damage_per_level", 2,
                         0.0, Double.MAX_VALUE);
 
@@ -88,27 +96,30 @@ public class Config {
                 .define("puzzle_4_applies_glowing", true);
 
         PUZZLE_6_DAMAGE_REDUCTION = CONFIG_BUILDER
-                .comment("Puzzle 6 reduces damage taken by this much, " +
-                        "multiplied by attacker's max health over victim's " +
-                        "max health, in decimal form.")
+                .comment("""
+                        Puzzle 6 reduces damage taken by this much
+                        multiplied by attacker's max health over victim's max health
+                        in decimal form.""")
                 .defineInRange("puzzle_6_damage_reduction", 0.01d, 0d, 1d);
 
         PUZZLE_6_DAMAGE_REDUCTION_CAP = CONFIG_BUILDER
-                .comment("Puzzle 6 damage reduction reaches a cap of " +
-                        "this value, in decimal form.")
+                .comment("""
+                        Puzzle 6 damage reduction reaches a cap of
+                        this value, in decimal form.""")
                 .defineInRange("puzzle_6_damage_reduction_cap", 0.5d, 0d, 1d);
 
         ROCKET_SPECIALIST_BONUS_DAMAGE_PER_LEVEL = CONFIG_BUILDER
-                .comment("Firework rockets shot with Rocket Specialist deal " +
-                        "percentage increased damage, in decimal form.")
+                .comment("""
+                        Firework rockets shot with Rocket Specialist deal
+                        percentage increased damage, in decimal form.""")
                 .defineInRange("rocket_specialist_bonus_damage_per_level",
                         0.25d, 0d,
                         Double.MAX_VALUE);
 
         ROCKET_SPECIALIST_BONUS_RADIUS_PER_LEVEL = CONFIG_BUILDER
-                .comment("Firework rockets shot with Rocket Specialist have " +
-                        "percentage increased explosion radius, in decimal " +
-                        "form.")
+                .comment("""
+                        Firework rockets shot with Rocket Specialist have
+                        percentage increased explosion radius, in decimal form.""")
                 .defineInRange("rocket_specialist_bonus_radius_per_level",
                         0.15d, 0d,
                         0.5d);
@@ -120,12 +131,79 @@ public class Config {
                         6d, 0d, Double.MAX_VALUE);
 
         MARE_POTENTIA_BONUS_PERCENT_DAMAGE = CONFIG_BUILDER
-                .comment("Mare Potentia causes arrows to deal this much " +
-                        "extra percentage damage, in decimal form.")
+                .comment("""
+                        Mare Potentia causes arrows to deal this much
+                        extra percentage damage, in decimal form,
+                        eg 0.7 = 70% increased damage.
+                        The intention was to make Sacred Corona and Shining Maria
+                        worse than Power V individually, but stronger together.
+                        They also have some defensive properties so they don't
+                        need to always be stronger.""")
                 .defineInRange("mare_potentia_bonus_percent_damage",
                         0.7d, 0d, Double.MAX_VALUE);
+
+        PUZZLE_5_EFFECT_DURATION_EXTENSION = CONFIG_BUILDER
+                .comment("""
+                        Puzzle 5's neutral and positive effects' duration
+                        is multiplied by this value, in decimal form.""")
+                .defineInRange("puzzle_5_effect_duration_extension", 1.5d, 1d,
+                        Double.MAX_VALUE);
+
+        PUZZLE_5_EFFECT_DURATION_EXTENSION_POTION = CONFIG_BUILDER
+                .comment("""
+                        Puzzle 5's neutral and positive effects' duration
+                        is further multiplied by this value when drinking potions,
+                        in decimal form.""")
+                .defineInRange("puzzle_5_effect_duration_extension_potion",
+                        1.33d, 1d,
+                        Double.MAX_VALUE);
+
+        PUZZLE_5_EFFECT_DURATION_REDUCTION = CONFIG_BUILDER
+                .comment("""
+                        Puzzle 5's negative effects' duration
+                        is multiplied by this value, in decimal form.""")
+                .defineInRange("puzzle_5_effect_duration_reduction",
+                        0.67d, 0d,
+                        1d);
+        CONFIG_BUILDER.pop();
+
+        CONFIG_BUILDER.push("Black/whitelist");
+
+        PUZZLE_5_EFFECT_BLACKLIST = CONFIG_BUILDER
+                .comment("List of effects whose duration should not be " +
+                        "modified by Puzzle 5.")
+                .defineList(
+                        "puzzle_5_blacklist",
+                        List.of(
+                                "irons_spellbooks:vex_timer",
+                                "irons_spellbooks:polar_bear_timer",
+                                "irons_spellbooks:raise_dead_timer",
+                                "irons_spellbooks:summon_horse_timer"
+                        ),
+                        s -> true
+                );
+
         CONFIG_BUILDER.pop();
 
         COMMON_CONFIG = CONFIG_BUILDER.build();
+    }
+
+    public static final class Cache {
+        private static Set<String> puzzle5BlacklistCache = null;
+
+        public static void onConfigReload(ModConfigEvent.Reloading event) {
+            if (event.getConfig().getSpec() == Config.COMMON_CONFIG) {
+                puzzle5BlacklistCache =
+                        new HashSet<>(Config.PUZZLE_5_EFFECT_BLACKLIST.get());
+            }
+        }
+
+        public static boolean isPuzzle5EffectBlacklisted(String effectRegistryName) {
+            if (puzzle5BlacklistCache == null) {
+                puzzle5BlacklistCache =
+                        new HashSet<>(Config.PUZZLE_5_EFFECT_BLACKLIST.get());
+            }
+            return puzzle5BlacklistCache.contains(effectRegistryName);
+        }
     }
 }

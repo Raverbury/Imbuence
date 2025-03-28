@@ -10,6 +10,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class Imbuence {
                 .registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
         ModRegistries.register();
         MinecraftForge.EVENT_BUS.register(this);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(Config.Cache::onConfigReload);
     }
 
     public static Pair<Integer, List<LivingEntity>> getAndCountNearbyPets(Player player) {

@@ -3,10 +3,12 @@ package io.github.raverbury.imbuence.enchantment;
 import io.github.raverbury.imbuence.Config;
 import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
+import io.github.raverbury.imbuence.accessors.MobEffectInstanceAccessor;
 import io.github.raverbury.imbuence.events.PotionDrinkAndApplyEffectEvent;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -22,6 +24,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber
@@ -106,34 +109,39 @@ public class PuzzleEnchantment extends Enchantment {
             return;
         }
 
-        if (e.mobEffectInstance.getEffect()
-                .getCategory() == MobEffectCategory.HARMFUL) {
+        MobEffectInstance newMobEffectInstance = e.mobEffectInstance;
+        MobEffect mobEffect = newMobEffectInstance.getEffect();
+
+        if (mobEffect.getCategory() == MobEffectCategory.HARMFUL) {
             return;
         }
 
-        e.mobEffectInstance.update(
-                new MobEffectInstance(
-                        e.mobEffectInstance.getEffect(),
-                        (int) ((float) e.mobEffectInstance.getDuration() * 1.5f),
-                        e.mobEffectInstance.getAmplifier()
-                )
-        );
+        if (isEffectBlacklisted(mobEffect)) {
+            return;
+        }
+
+        changeEffectDuration(newMobEffectInstance,
+                Config.PUZZLE_5_EFFECT_DURATION_EXTENSION_POTION.get());
     }
 
     @SubscribeEvent
     public static void puzzle5ModifyEffectDuration(MobEffectEvent.Added event) {
+        int puzzleCount = getSlotsWithPuzzleEnchantmentCount(event.getEntity());
+        if (puzzleCount != 5) {
+            return;
+        }
+
+        if (isEffectBlacklisted(event.getEffectInstance().getEffect())) {
+            return;
+        }
+
         MobEffectInstance newMobEffectInstance = event.getEffectInstance();
-        float durationModifier =
+        double durationModifier =
                 newMobEffectInstance.getEffect()
                         .getCategory() == MobEffectCategory.HARMFUL ?
-                        0.5f : 2f;
-        newMobEffectInstance.update(
-                new MobEffectInstance(
-                        newMobEffectInstance.getEffect(),
-                        (int) ((float) newMobEffectInstance.getDuration() * durationModifier),
-                        newMobEffectInstance.getAmplifier()
-                )
-        );
+                        Config.PUZZLE_5_EFFECT_DURATION_REDUCTION.get() :
+                        Config.PUZZLE_5_EFFECT_DURATION_EXTENSION.get();
+        changeEffectDuration(newMobEffectInstance, durationModifier);
     }
 
     @SubscribeEvent
@@ -181,6 +189,21 @@ public class PuzzleEnchantment extends Enchantment {
                     ModRegistries.PUZZLE_ENCHANTMENT.get());
         }
         return count;
+    }
+
+    public static boolean isEffectBlacklisted(MobEffect mobEffect) {
+        ResourceLocation effectRegistryName =
+                ForgeRegistries.MOB_EFFECTS.getKey(mobEffect);
+        if (effectRegistryName == null) {
+            return false;
+        }
+        return Config.Cache.isPuzzle5EffectBlacklisted(effectRegistryName.toString());
+    }
+
+    public static void changeEffectDuration(MobEffectInstance mobEffectInstance, double multiplier) {
+        ((MobEffectInstanceAccessor)mobEffectInstance).imbuence$setDuration(
+                (int) (mobEffectInstance.getDuration() * multiplier)
+        );
     }
 
     @Override

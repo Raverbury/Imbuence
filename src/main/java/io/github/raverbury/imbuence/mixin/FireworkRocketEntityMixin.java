@@ -8,18 +8,26 @@ import io.github.raverbury.imbuence.Config;
 import io.github.raverbury.imbuence.enchantment.AfterburnerEnchantment;
 import io.github.raverbury.imbuence.enchantment.RocketSpecialistEnchantment;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.FireworkRocketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(FireworkRocketEntity.class)
-public class FireworkRocketEntityMixin {
+public abstract class FireworkRocketEntityMixin implements EntityAccessor {
+
+    @Shadow @Final private static EntityDataAccessor<ItemStack> DATA_ID_FIREWORKS_ITEM;
 
     /**
      * This is the ctor used to attach rockets to boost elytra, we increase
@@ -127,5 +135,34 @@ public class FireworkRocketEntityMixin {
         }
 
         return 1;
+    }
+
+    @WrapOperation(
+            method = "onHitEntity",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/projectile/FireworkRocketEntity;explode()V")
+    )
+    private void imbuence$stunMainTargetOnHit(FireworkRocketEntity instance,
+                                              Operation<Void> original,
+                                              @Local(argsOnly = true) EntityHitResult entityHitResult) {
+        ItemStack fireworkRocket =
+                this.imbuence$callGetEntityData().get(DATA_ID_FIREWORKS_ITEM);
+        CompoundTag tag = fireworkRocket.isEmpty()? null :
+                fireworkRocket.getTagElement("Fireworks");
+        int level =
+                RocketSpecialistEnchantment.getRocketSpecialistLevelFromTag(tag);
+        if (level > 0) {
+            if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
+                livingEntity.addEffect(
+                        new MobEffectInstance(
+                                MobEffects.MOVEMENT_SLOWDOWN,
+                                15,
+                                4
+                        )
+                );
+            }
+        }
+        original.call(instance);
     }
 }
