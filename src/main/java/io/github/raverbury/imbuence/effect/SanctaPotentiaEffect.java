@@ -50,7 +50,7 @@ public class SanctaPotentiaEffect extends MobEffect {
         }
         if (HAS_FORBIDDEN_SYZYGY) {
             if (Config.FORBIDDEN_SYZYGY_APPLIES_GLOWING.get()) {
-                event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, false, true));
+                event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, true, false, true));
             }
         }
         event.setAmount(

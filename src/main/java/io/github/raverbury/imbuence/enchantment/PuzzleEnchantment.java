@@ -71,7 +71,7 @@ public class PuzzleEnchantment extends Enchantment {
         if (getSlotsWithPuzzleEnchantmentCount(e.player) == 3) {
             e.player.addEffect(
                     new MobEffectInstance(MobEffects.LUCK, 119, 2, true,
-                            true));
+                            false, false));
         }
     }
 

@@ -118,7 +118,7 @@ public abstract class PlayerMixin {
         CalculateBonusDamageFromEnchantmentEvent event =
                 new CalculateBonusDamageFromEnchantmentEvent(
                         (LivingEntity) (Object) this,
-                        handItem, entity, attackStrengthScale);
+                        handItem, entity, attackStrengthScale, CalculateBonusDamageFromEnchantmentEvent.AttackType.PLAYER_MELEE);
         MinecraftForge.EVENT_BUS.post(event
         );
         return original.call(handItem, p_44835_) + event.customBonusDamage;

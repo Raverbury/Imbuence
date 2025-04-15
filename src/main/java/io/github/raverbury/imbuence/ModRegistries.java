@@ -1,9 +1,6 @@
 package io.github.raverbury.imbuence;
 
-import io.github.raverbury.imbuence.effect.ForbiddenSyzygyEffect;
-import io.github.raverbury.imbuence.effect.JudgementEffect;
-import io.github.raverbury.imbuence.effect.MarePotentiaEffect;
-import io.github.raverbury.imbuence.effect.SanctaPotentiaEffect;
+import io.github.raverbury.imbuence.effect.*;
 import io.github.raverbury.imbuence.enchantment.*;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.*;
@@ -80,6 +77,16 @@ public class ModRegistries {
                     CommanderEnchantment.ID,
                     CommanderEnchantment::new
             );
+    public static final RegistryObject<Enchantment> THERMOSHOCK_ENCHANTMENT =
+            ENCHANTMENT_REGISTRY.register(
+                    "thermoshock",
+                    ThermoshockEnchantment::new
+            );
+    public static final RegistryObject<Enchantment> THERMOHEX_ENCHANTMENT =
+            ENCHANTMENT_REGISTRY.register(
+                    "thermohex",
+                    ThermohexEnchantment::new
+            );
 
     private static final DeferredRegister<MobEffect> MOB_EFFECT_REGISTRY = DeferredRegister.create(
             ForgeRegistries.MOB_EFFECTS, Imbuence.MODID);
@@ -91,6 +98,9 @@ public class ModRegistries {
             "mare_potentia", MarePotentiaEffect::new);
     public static final RegistryObject<MobEffect> FORBIDDEN_SYZYGY_EFFECT = MOB_EFFECT_REGISTRY.register(
             "forbidden_syzygy", ForbiddenSyzygyEffect::new);
+    public static final RegistryObject<MobEffect> HEAT_FRAGILITY_EFFECT =
+            MOB_EFFECT_REGISTRY.register("heat_fragility",
+                    HeatFragilityEffect::new);
 
     public static void register() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

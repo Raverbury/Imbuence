@@ -54,7 +54,8 @@ public abstract class MobMixin {
         CalculateBonusDamageFromEnchantmentEvent event =
                 new CalculateBonusDamageFromEnchantmentEvent(
                         (LivingEntity) (Object) this,
-                        handItem, target, 1f);
+                        handItem, target, 1f,
+                        CalculateBonusDamageFromEnchantmentEvent.AttackType.MOB_MELEE);
         MinecraftForge.EVENT_BUS.post(event
         );
         return original.call(handItem, p_44835_) + event.customBonusDamage;

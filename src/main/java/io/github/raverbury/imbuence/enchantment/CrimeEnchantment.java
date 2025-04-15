@@ -56,7 +56,8 @@ public class CrimeEnchantment extends ModdedAwareEnchantment {
         int judgementAmplifier = BASE_EFFECT_AMPLIFIER + EFFECT_AMPLIFIER_GROWTH * crimeLevel;
         livingAttacker.addEffect(
                 new MobEffectInstance(ModRegistries.JUDGEMENT_EFFECT.get(),
-                        judgementDuration, judgementAmplifier));
+                        judgementDuration, judgementAmplifier, true, false,
+                        true));
         //        Imbuence.LOGGER.debug("applied judgement at amp " + judgementAmplifier);
     }
 

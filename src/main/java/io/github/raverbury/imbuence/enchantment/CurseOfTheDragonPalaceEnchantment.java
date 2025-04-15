@@ -48,7 +48,8 @@ public class CurseOfTheDragonPalaceEnchantment extends Enchantment {
                         helmetIS.setDamageValue(helmetIS.getDamageValue() - 5);
                     }
                     e.player.addEffect(new MobEffectInstance(
-                            MobEffects.WATER_BREATHING, 219, 0, true, true
+                            MobEffects.WATER_BREATHING, 219, 0, true, false,
+                            true
                     ));
                 }
             }

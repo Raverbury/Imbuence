@@ -49,7 +49,7 @@ public class MarePotentiaEffect extends MobEffect {
             return;
         }
         if (HAS_FORBIDDEN_SYZYGY) {
-            event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, false, true));
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.GLOWING, 5 * 20, 0, true, false, true));
         }
         event.setAmount(
                 (float) (event.getAmount() * (1 + Config.MARE_POTENTIA_BONUS_PERCENT_DAMAGE.get())));

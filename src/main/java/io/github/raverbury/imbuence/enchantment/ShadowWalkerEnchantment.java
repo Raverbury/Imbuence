@@ -52,9 +52,10 @@ public class ShadowWalkerEnchantment extends ModdedAwareEnchantment {
         int internalLightLevelThreshold = Math.min(MIN_INTERNAL_LIGHT_LEVEL_THRESHOLD + INTERNAL_LIGHT_LEVEL_THRESHOLD_GROWTH * shadowWalkerLevel, MAX_INTERNAL_LIGHT_LEVEL_THRESHOLD);
         int strengthLevel = shadowWalkerLevel > 1? 1 : 0;
         if (internalLightLevel <= internalLightLevelThreshold) {
-            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 4 * 20, strengthLevel, true, false, true));
-            if (shadowWalkerLevel > 1) {
-                entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 4 * 20, 0, true, false, true));
+            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST,
+                    4 * 20, strengthLevel, true, false, false));
+            if (shadowWalkerLevel > 1 && !entity.hasEffect(MobEffects.REGENERATION)) {
+                entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 4 * 20, 0, true, false, false));
             }
         }
     }
