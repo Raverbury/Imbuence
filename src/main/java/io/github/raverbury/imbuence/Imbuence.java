@@ -2,10 +2,13 @@ package io.github.raverbury.imbuence;
 
 import com.mojang.logging.LogUtils;
 import io.github.raverbury.imbuence.util.Pair;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -52,5 +55,11 @@ public class Imbuence {
             }
         }
         return new Pair<>(count, nearbyEntitiesOwnedByPlayer);
+    }
+
+    public static final class Util {
+        public static boolean isArrowNotTrident(Entity entity) {
+            return entity instanceof AbstractArrow && !(entity instanceof ThrownTrident);
+        }
     }
 }

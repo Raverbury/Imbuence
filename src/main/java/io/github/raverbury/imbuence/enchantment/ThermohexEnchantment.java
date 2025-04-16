@@ -1,5 +1,6 @@
 package io.github.raverbury.imbuence.enchantment;
 
+import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import io.github.raverbury.imbuence.enchantment.base.ModdedAwareEnchantment;
 import net.minecraft.world.damagesource.DamageSource;
@@ -7,7 +8,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,16 +38,19 @@ public class ThermohexEnchantment extends ModdedAwareEnchantment {
         if (directEntity == null) {
             return;
         }
-        if (!(directEntity instanceof AbstractArrow) || !(attacker instanceof LivingEntity)) {
+        if (!(Imbuence.Util.isArrowNotTrident(directEntity)) || !(attacker instanceof LivingEntity)) {
             return;
         }
-        int thermoHexLevel =
+        int thermohexLevel =
                 EnchantmentHelper.getEnchantmentLevel(
                         ModRegistries.THERMOHEX_ENCHANTMENT.get(),
                         (LivingEntity) attacker);
+        if (thermohexLevel == 0) {
+            return;
+        }
         event.getEntity().addEffect(new MobEffectInstance(
                 ModRegistries.HEAT_FRAGILITY_EFFECT.get(), 200,
-                thermoHexLevel - 1, true, false, true));
+                thermohexLevel - 1, true, false, true));
     }
 
     @Override

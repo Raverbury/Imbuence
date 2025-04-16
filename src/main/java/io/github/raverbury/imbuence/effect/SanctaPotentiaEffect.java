@@ -1,6 +1,7 @@
 package io.github.raverbury.imbuence.effect;
 
 import io.github.raverbury.imbuence.Config;
+import io.github.raverbury.imbuence.Imbuence;
 import io.github.raverbury.imbuence.ModRegistries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -9,7 +10,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -40,7 +40,7 @@ public class SanctaPotentiaEffect extends MobEffect {
         if (directEntity == null) {
             return;
         }
-        if (!(directEntity instanceof AbstractArrow) || !(attacker instanceof LivingEntity)) {
+        if (!(Imbuence.Util.isArrowNotTrident(directEntity)) || !(attacker instanceof LivingEntity)) {
             return;
         }
         final boolean HAS_SANCTA_POTENTIA = ((LivingEntity) attacker).hasEffect(ModRegistries.SANCTA_POTENTIA_EFFECT.get());
